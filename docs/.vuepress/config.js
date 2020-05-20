@@ -1,91 +1,106 @@
 module.exports = {
-  title: "ZooMze",
-  description: "The description of the site.",
-  head: [["link", { rel: "icon", href: `/logo.png` }]],
-  base: "/",
-  dest: "./dist",
-
-  themeConfig: {
-    search: true,
-    nav: [
+  "title": "ZooMze\'s World",
+  "description": "Code your dream!",
+  "dest": "public",
+  "head": [
+    [
+      "link",
       {
-        text: '基础',
-        link: '/studyBasement/', // 读取改目录下的README.md
-        items: [
-          {
-            text: 'JS',
-            link: '/studyBasement/JS' // 直接读取需要的文件
-          },
-          {
-            text: 'Vue',
-            link: '/studyBasement/Vue'
-          },
-          {
-            text: 'React',
-            link: '/studyBasement/React'
-          },
-        ]
-      },
-      {
-        text: '扩展',
-        link: '/studyComponents/',
-        items: [
-          {
-            text: 'Element',
-            link: '/studyComponents/Element'
-          },
-          {
-            text: 'Vant',
-            link: '/studyComponents/Vant'
-          },
-          {
-            text: 'AntD',
-            link: '/studyComponents/AntD'
-          },
-          {
-            text: 'GoJS',
-            link: '/studyComponents/GoJS'
-          },
-        ]
-      },
-      {
-        text: '踩坑&总结',
-        link: '/summary/',
-        items: [
-          {
-            text: 'Vue-Cli Polyfill',
-            link: '/summary/vue-cli3-polyfill'
-          },
-        ]
-      },
+        "rel": "icon",
+        "href": "/favicon.ico"
+      }
     ],
-    sidebar: 'auto',
-    sidebarDepth: 3,
-    smoothScroll: true,
-    lastUpdated: 'Last Updated'
+    [
+      "meta",
+      {
+        "name": "viewport",
+        "content": "width=device-width,initial-scale=1,user-scalable=no"
+      }
+    ]
+  ],
+  "theme": "reco",
+  "themeConfig": {
+    "mode": "auto",
+    "modePicker": true,
+    "nav": [
+      {
+        "text": "Home",
+        "link": "/",
+        "icon": "reco-home"
+      },
+      // {
+      //   "text": "TimeLine",
+      //   "link": "/timeline/",
+      //   "icon": "reco-date"
+      // },
+      {
+        "text": "外链",
+        "icon": "reco-message",
+        "items": [
+          {
+            "text": "GitHub",
+            "link": "https://github.com/ZooMze",
+            "icon": "reco-github"
+          }
+        ]
+      }
+    ],
+    "type": "blog",
+    "blogConfig": {
+      "category": {
+        "location": 2,
+        "text": "分类"
+      },
+      "tag": {
+        "location": 3,
+        "text": "标签"
+      }
+    },
+    "friendLink": [
+      {
+        "title": "vuepress-theme-reco",
+        "desc": "A simple and beautiful vuepress Blog & Doc theme.",
+        "avatar": "https://vuepress-theme-reco.recoluan.com/icon_vuepress_reco.png",
+        "link": "https://vuepress-theme-reco.recoluan.com"
+      }
+    ],
+    "logo": "/logo.png",
+    "search": true,
+    "searchMaxSuggestions": 10,
+    "sidebar": "auto",
+    "lastUpdated": "Last Updated",
+    "author": "ZooMze",
+    "authorAvatar": "/avatar.png",
+    "record": "xxxx",
+    "startYear": "2020"
   },
-
-  markdown: {
-    // options for markdown-it-anchor
-    anchor: { permalink: false },
-    extendMarkdown: md => {
-      md.use(require("markdown-it-katex"));
-    }
-  }
-};
-
-function genSidebarConfig (title) {
-  return [
-    {
-      title,
-      collapsable: false,
-      children: [
-        '',
-        'getting-started',
-        'customize',
-        'advanced',
-      ]
-    }
+  "markdown": {
+    "lineNumbers": true
+  },
+  plugins: [
+    [
+      'vuepress-plugin-helper-live2d', {
+        live2d: {
+          // 是否启用(关闭请设置为false)(default: true)
+          enable: true,
+          // 模型名称(default: hibiki)>>>取值请参考：
+          // https://github.com/JoeyBling/hexo-theme-yilia-plus/wiki/live2d%E6%A8%A1%E5%9E%8B%E5%8C%85%E5%B1%95%E7%A4%BA
+          model: 'wanko',
+          display: {
+            position: "right", // 显示位置：left/right(default: 'right')
+            width: 135, // 模型的长度(default: 135)
+            height: 300, // 模型的高度(default: 300)
+            hOffset: 65, //  水平偏移(default: 65)
+            vOffset: 0, //  垂直偏移(default: 0)
+          },
+          mobile: {
+            show: false // 是否在移动设备上显示(default: false)
+          },
+          react: {
+            opacity: 0.8 // 模型透明度(default: 0.8)
+          }
+        }
+      }
+    ]
   ]
 }
-
