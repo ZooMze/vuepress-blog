@@ -14,7 +14,7 @@ bgImage: '/background.png'
 bgImageStyle: {
   height: '300px',
 }
-isShowTitleInHome: false
+isShowTitleInHome: true
 actionText: Guide
 actionLink: /views/other/guide
 features:

@@ -20,8 +20,8 @@ module.exports = {
   ],
   "theme": "reco",
   "themeConfig": {
-    "mode": "auto",
-    "modePicker": true,
+    "mode": "light",
+    "modePicker": false,
     "nav": [
       {
         "text": "Home",
@@ -34,15 +34,10 @@ module.exports = {
       //   "icon": "reco-date"
       // },
       {
-        "text": "外链",
         "icon": "reco-message",
-        "items": [
-          {
-            "text": "GitHub",
-            "link": "https://github.com/ZooMze",
-            "icon": "reco-github"
-          }
-        ]
+        "text": "GitHub",
+        "link": "https://github.com/ZooMze",
+        "icon": "reco-github"
       }
     ],
     "type": "blog",
@@ -71,8 +66,8 @@ module.exports = {
     "lastUpdated": "Last Updated",
     "author": "ZooMze",
     "authorAvatar": "/avatar.png",
-    "record": "xxxx",
-    "startYear": "2020"
+    "record": "Nothing here",
+    "startYear": "2020-05"
   },
   "markdown": {
     "lineNumbers": true
