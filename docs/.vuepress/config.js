@@ -1,7 +1,7 @@
 module.exports = {
   "title": "ZooMze\'s World",
   "description": "Code your dream!",
-  "dest": "public",
+  "dest": "dist",
   "head": [
     [
       "link",
@@ -28,13 +28,19 @@ module.exports = {
         "link": "/",
         "icon": "reco-home"
       },
+      {
+        text: 'categories',
+        items: [
+          { text: '基础', link: '/studyBasement/' },
+          { text: '扩展', link: '/studyComponent/' }
+        ]
+      },
       // {
       //   "text": "TimeLine",
       //   "link": "/timeline/",
       //   "icon": "reco-date"
       // },
       {
-        "icon": "reco-message",
         "text": "GitHub",
         "link": "https://github.com/ZooMze",
         "icon": "reco-github"
@@ -67,7 +73,8 @@ module.exports = {
     "author": "ZooMze",
     "authorAvatar": "/avatar.png",
     "record": "Nothing here",
-    "startYear": "2020-05"
+    "startYear": "2020-05",
+    "endYear": "2020-∞"
   },
   "markdown": {
     "lineNumbers": true
