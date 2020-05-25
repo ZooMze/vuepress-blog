@@ -1074,3 +1074,4 @@ class Calculator extends React.Component {
 通常有的吴总监无法提前预知其子组件的具体内容。例如在 `Sidebar` 和 `Dialog` 等展现通用容器(box)的组件中特别容易遇到这种情况。
 
 这里可以使用一个特殊的prop : `children` 来指代这些未知的内容。
+
