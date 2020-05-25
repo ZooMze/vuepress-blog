@@ -6,12 +6,37 @@ categories:
 tags:
  - ElementUI
 ---
-# Element
+# ElementUI
 ## 技巧要点
-### 固定表头的高度
+### 表格的固定表头与最大高度
 官方文档描述为直接添加`height`属性, 但是通常情况下, 我们更希望是根据数据的长度动态控制, 当达到一定数量时才进行高度限制
 
 故更建议直接使用`max-height`进行指定最大高度
+
+你可能会更常遇到这种需求: "给表格添加动态的最大高度, 使其正好完整填充当前视图。"
+
+而 `max-height` 则只支持 `number/string` 类型的参数, 此时则需要动态输入计算后的高度值, 可以依托 `computed` 实现:
+
+```js
+  ...
+  // template
+  <el-table
+    :max-height="maxTableHeight(600)"
+    >
+  ...
+  </el-table>
+
+  ...
+  //js
+  computed: {
+    maxTableHeight() {
+      return (height) => {
+        window.innerHeight - height
+      }
+    },
+  }
+  ...
+```
 
 ### DatePicker的处理逻辑
 在某些情况下，时间选择器并非固定使用range类型，此时需要自行进处理时间先后的判断逻辑，可按照下方逻辑进行使用:

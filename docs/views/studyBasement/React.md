@@ -158,7 +158,7 @@ class Welcome extends React.Component {
 }
 ```
 
-### class组件(非受控组件)
+### class组件
 最常见的组件, 类似Vue中的组件, 持有state状态管理, 继承了 `React.component` 。
 此时在组件内 `this` 指向当前组件本身
 
@@ -186,10 +186,10 @@ class Welcome extends React.Component {
 和VUE组件相同的是, props内的数据都不应去直接修改, 而是用state维护
 :::
 
-### function组件(受控组件)
-不同于普通的组件, 虽然同样可以输出 `ReactDOM`, 但其没有自身的state, 仅能从父组件处获取 `props` 的值, 可以理解为被父组件控制, 即受控组件。
+### 函数组件
+不同于普通的组件, 虽然同样可以输出 `ReactDOM`, 但其没有自身的state, 仅能从父组件处获取 `props` 的值, 可以理解为被父组件控制。
 
-受控组件的具有 数据统一, 单向数据流, 直观等优点; 事实上, 可以尽量多的使用函数组件来代替class组件, 这可以极大的减少不必要的代码量和理解难度。
+函数组件的具有 数据统一, 单向数据流, 直观等优点; 事实上, 可以尽量多的使用函数组件来代替class组件, 这可以极大的减少不必要的代码量和理解难度。
 
 ### 组合组件
 
@@ -214,9 +214,10 @@ class Father extends React.Component {
 
 ### Props 只读
 
-不修改入参的函数称为 **纯函数**, 所有React组件都不应该修改入参, 下一节将介绍state， 可以辅助完成被纯函数限制的内容
+不修改入参的函数称为 **纯函数**, 所有React组件都不应该修改入参, 下一节将介绍`state`，可以辅助完成被纯函数限制的内容
 
 React 非常灵活, 但有一条严格的规则:
+
 ::: danger 警告
 所有 React 组件都必须像纯函数一样保护它们的 props 不被更改
 :::
@@ -244,6 +245,7 @@ class Clock extends React.Component {
 ```
 
 向构造函数添加state, 并取消在父组件的入参 `date`, 同时提取`Clock`组件, 完成后代码:
+
 ```JavaScript
 class Clock extends React.Component {
   constructor(props) {
@@ -698,5 +700,377 @@ const listItems = numbers.map((number) =>
 
 通常情况下一般使用数据源的唯一 "id", 保证数据不会变化的情况下可以使用索引 `index` 作为 `Key`, 但如果列表会发生顺序变化时, 会造成循环性能变差, 也可以查看这里[深入解析为什么 key 是必须的](https://react.docschina.org/docs/reconciliation.html#recursing-on-children)。
 
-working...
+## 表单
 
+在 React 里，表单元素通常会保持一些内部的 state。
+
+```js
+<form>
+  <label>
+    名字:
+    <input type="text" name="name" />
+  </label>
+  <input type="submit" value="提交" />
+</form>
+```
+这是一个简单的表单, 他只接受了一个 `name`, 内容在其内部维护。
+
+### 受控组件
+
+在HTML中, 表单元素(`<input>`, `<textarea>`, `<select>`等)通常自己维护自身的state, 即存放于 `value` 中; 而在React中, 这些状态通常保存在组件的state中, 并且只能通过 `setState()` 来更新。
+
+现在可以将上述两种 `state` 进行结合, 使React的 `state` 作为唯一数据源, 而非表单自身的 `state`。
+
+**渲染表单的 React 组件还控制着用户输入过程中表单发生的操作。被 React 以这种方式控制取值的表单输入元素就叫做 “受控组件” 。**
+
+将刚刚的组件稍作修改:
+
+```js
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    // 初始化state
+    this.state = {value: ''};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  // 处理内容变化
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert('提交的名字: ' + this.state.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          名字:
+          <input type="text" value={this.state.value} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="提交" />
+      </form>
+    );
+  }
+}
+```
+
+对于受控组件来说，输入的值始终由 React 的 `state` 驱动。你也可以将 `value` 传递给其他 UI 元素，或者通过其他事件处理函数重置，但这意味着你需要编写更多的代码。
+
+::: warning 注意
+  你可以将数组传递到 value 属性中，以支持在 select 标签中选择多个选项：
+  ```js
+    <select multiple={true} value={['B', 'C']}>
+  ```
+:::
+
+### 文件 input 标签
+
+在 HTML 中，`<input type="file">` 允许用户从存储设备中选择一个或多个文件，将其上传到服务器，或通过使用 JavaScript 的 File API 进行控制。
+
+因为它的 `value` 只读，所以它是 React 中的一个**非受控组件**。
+
+### 受控输入空值
+
+在受控组件上指定 `value` 的 prop 会阻止用户更改输入。如果你指定了 value，但输入仍可编辑，则可能是你意外地将value 设置为 undefined 或 null。
+
+```js
+ReactDOM.render(<input value="hi" />, mountNode);
+
+setTimeout(function() {
+  ReactDOM.render(<input value={null} />, mountNode);
+}, 1000);
+```
+上述组件最开始无法修改, 延迟结束后变为可修改。
+
+## 状态提升
+
+通常, 多个组件需要对同一数据做出相应的反应, 这时则需要将状态提升到共同的父组件中去, 由父组件将数据流向子组件。
+
+在本节中, 将通过一个实例: '计算水在用户输入的温度下是否会沸腾的温度计算器' 来进行逐一讲解。
+
+### 基础功能
+首先创建一个判断是否煮沸的函数组件: `BoilingVerdict`, 它接受一个摄氏度 `celsius` 作为 `prop`, 并以此作为条件判断是否煮沸。
+```js
+function BoilingVerdict(props) {
+  if (props.celsius >= 100) {
+    return <p>水可以煮沸!</p>;
+  }
+  return <p>水无法煮沸!</p>;
+}
+```
+
+接下来创建一个用于计算温度的组件: `Calculator`, 它渲染了一个 `\<input\>`作为数据的输入源, 并将其维护在自身的 `state.temperature` 中。
+
+然后, 再其内部渲染刚刚创建的 `BoilingVerdict` 组件。
+
+```js
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    // 初始化数据
+    this.state = {temperature: ''};
+  }
+
+  handleChange(e) {
+    // 数据修改
+    this.setState({temperature: e.target.value});
+  }
+
+  render() {
+    // 数据引用
+    return (
+      <fieldset>
+        <legend>请输入摄氏温度:</legend>
+        <input
+          value={this.state.temperature}
+          onChange={this.handleChange} />
+        <BoilingVerdict
+          celsius={parseFloat(this.state.temperature)} />
+      </fieldset>
+    );
+  }
+}
+```
+
+这两个组件是简单的父子关系, 实现的功能也非常简单, 由 `Calculator` 组件流向 `BoilingVerdict` 中去。
+
+### 新的功能
+
+现在万恶的产品提出了新的需求: 在已有的摄氏度功能基础上, 添加华氏度的支持, 并且输入一种类型的温度自动生成另一种温度, 同时再判断水是否煮沸。
+
+我们先从组件提取开始: 将原本基础的 `<input>`变为 `TemperatureInput` 组件, 然后为其添加单位的 `prop`
+
+```js
+// 定义单位
+const scaleNames = {
+  c: '摄氏度(Celsius)',
+  f: '华氏度(Fahrenheit)'
+};
+
+class TemperatureInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {temperature: ''};
+  }
+
+  handleChange(e) {
+    this.setState({temperature: e.target.value});
+  }
+
+  render() {
+    const temperature = this.state.temperature;
+    const scale = this.props.scale; // 接收单位信息
+    return (
+      <fieldset>
+        <legend>输入的{scaleNames[scale]}为:</legend>
+        <input
+          value={temperature}
+          onChange={this.handleChange} />
+      </fieldset>
+    );
+  }
+}
+```
+
+修改 `Calculator` 组件中的input:
+
+```js
+class Calculator extends React.Component {
+  render() {
+    return (
+      <div>
+        <TemperatureInput scale="c" />
+        <TemperatureInput scale="f" />
+      </div>
+    );
+  }
+}
+```
+
+输入框准备完毕后, 我们还需要一个转换两种温度的函数:
+
+```js
+function toCelsius(fahrenheit) {
+  return (fahrenheit - 32) * 5 / 9;
+}
+
+function toFahrenheit(celsius) {
+  return (celsius * 9 / 5) + 32;
+}
+```
+
+然后再编写一个使用如上两个函数的函数, 这个函有两个参数: 第一个 `string`类型, 为输入的温度数据; 第二个 `function`类型, 为需要执行的操作函数。
+
+```js
+function tryConvert(temperature, convertFunction) {
+  const input = parseFloat(temperature);
+  if (Number.isNaN(input)) {
+    return '';
+  }
+  const output = convertFunction(input);
+  const rounded = Math.round(output * 1000) / 1000;
+  return rounded.toString();
+}
+```
+
+### 状态提升
+
+现在的问题是, 两个输入框各干各的, 此外由于温度的数据都位于 `TemperatureInput` 中, 我们并不能在 `Calculator` 中进行计算。
+
+在 React 中，将多个组件中需要共享的 `state` 向上移动到它们的最近共同父组件中，便可实现共享 `state`。这就是所谓的 **状态提升**。
+
+但是, 由此一来会产生别的问题, 组件的 `prop` 是只读的, 当 `temperature` 存在于 `TemperatureInput` 组件的 `state` 中时, 组件调用 `this.setState()` 便可修改它。然而，`temperature` 是由父组件传入的 `prop`，`TemperatureInput` 组件便失去了对它的控制权, 即使你能利用 `prop` 创建副本也无法完全的控制 `prop`。
+
+在React中, 这种问题通常是通过 "受控组件" 来解决的。
+
+::: tip
+与 DOM 中的 `<input>` 接受 `value` 和 `onChange` 一样，自定义的 `TemperatureInput` 组件接受 `temperature` 和 `onTemperatureChange` 这两个来自父组件 `Calculator` 的 `props`。
+
+如果你觉得难以理解, 可以根据vue组件的事件向上广播 `@emit` 来进行辅助思考和理解。
+:::
+
+当 `TemperatureInput` 组件想要向上更新温度数据时, 只需要调用 `this.props.onTemperatureChange()`
+
+```js
+ handleChange(e) {
+    // Before: this.setState({temperature: e.target.value});
+    this.props.onTemperatureChange(e.target.value);
+    // ...
+ }
+```
+
+::: warning 注意
+自定义组件中的 `prop` 的命名是任意的, 并没有任何特殊含义, 所以使用 `value` 代替 `temperature` 、`onChange` 代替 `onTemperatureChange`也完全可以。
+:::
+
+`onTemperatureChange` 的 `prop` 和 `temperature` 的 `prop` 一样，均由父组件 `Calculator` 提供。它通过修改父组件自身的内部 `state` 来处理数据的变化，进而使用新的数值重新渲染两个输入框。
+
+```js
+class TemperatureInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  // onChange的回调, 将value的值作为参数调用props的函数, 就像vue的@emit一样
+  handleChange(e) {
+    this.props.onTemperatureChange(e.target.value);
+  }
+
+  render() {
+    // 使用父组件的prop
+    const temperature = this.props.temperature;
+    const scale = this.props.scale;
+    return (
+      <fieldset>
+        <legend>输入的{scaleNames[scale]}为:</legend>
+        <input 
+          value={temperature}
+          onChange={this.handleChange} />
+      </fieldset>
+    );
+  }
+}
+```
+
+子组件 `TemperatureInput` 处理好了, 然后是父组件 `Calculator`, 父组件中持有 `temperature` 和 `scale` 这两个状态数据, 这就是由子组件所 "提升" 上来的数据, 他们是这样的:
+
+```js
+// 在摄氏度的输入框中输入 '123', 现在的Calculator组件中的state是这样的
+{
+  temperature: '123',
+  scale: 'c'
+}
+
+// 在华氏度的输入框中输入 '12', 现在的Calculator组件中的state是这样的
+{
+  temperature: '12',
+  scale: 'f'
+}
+```
+
+::: tip 小建议
+虽然可以用两个不同的变量存放这两个输入框的值, 但其实没有必要, 另外的值完全可以交给 `Calculator` 组件内部进行计算后传递给 `TemperatureInput` 组件。
+:::
+
+现在 你的 `Caculator` 组件变成了这样:
+
+```js
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+    this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+    // 初始化, 在事件绑定后
+    this.state = {temperature: '', scale: 'c'};
+  }
+
+  // 定义两个回调函数用于处理数据变化, 并更新到state
+  handleCelsiusChange(temperature) {
+    this.setState({scale: 'c', temperature});
+  }
+
+  handleFahrenheitChange(temperature) {
+    this.setState({scale: 'f', temperature});
+  }
+
+  render() {
+    const scale = this.state.scale;
+    const temperature = this.state.temperature;
+    // 定义两个数据
+    const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+    const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+
+    return (
+      <div>
+        <TemperatureInput
+          scale="c"
+          temperature={celsius}
+          onTemperatureChange={this.handleCelsiusChange} />
+        <TemperatureInput
+          scale="f"
+          temperature={fahrenheit}
+          onTemperatureChange={this.handleFahrenheitChange} />
+        <BoilingVerdict
+          celsius={parseFloat(celsius)} />
+      </div>
+    );
+  }
+}
+```
+
+### 流程回顾
+
+最后再来回顾一下, 从你在input框中输入数字之后, 这些组件到底做了些什么:
+
+* React 会调用 `DOM` 中 `<input>` 的 `onChange` 方法。在本例中，它是 `TemperatureInput` 组件的 `handleChange` 方法。
+
+* `TemperatureInput` 组件中的 `handleChange` 方法会调用 `this.props.onTemperatureChange()`，并传入新输入的值作为参数。其 `props` 诸如 `onTemperatureChange` 之类，均由父组件 `Calculator` 提供。
+
+* 起初渲染时，用于摄氏度输入的子组件 `TemperatureInput` 中的 `onTemperatureChange` 方法与 `Calculator` 组件中的 `handleCelsiusChange` 方法相同，而，用于华氏度输入的子组件 `TemperatureInput` 中的 `onTemperatureChange` 方法与 `Calculator` 组件中的 `handleFahrenheitChange` 方法相同。因此，无论哪个输入框被编辑都会调用 `Calculator` 组件中对应的方法。
+
+* `在这些方法内部，Calculator` 组件通过使用新的输入值与当前输入框对应的温度计量单位来调用 `this.setState()` 进而请求 React 重新渲染自己本身。
+
+* React 调用 `Calculator` 组件的 `render` 方法得到组件的 UI 呈现。温度转换在这时进行，两个输入框中的数值通过当前输入温度和其计量单位来重新计算获得。
+
+* React 使用 `Calculator` 组件提供的新 `props` 分别调用两个
+`TemperatureInput` 子组件的 `render` 方法来获取子组件的 UI 呈现。
+
+* React 调用 `BoilingVerdict` 组件的 `render` 方法，并将摄氏温度值以组件 `props` 方式传入。
+
+* React DOM 根据输入值匹配水是否沸腾，并将结果更新至 DOM。我们刚刚编辑的输入框接收其当前值，另一个输入框内容更新为转换后的温度值。
+
+
+## 组合与继承
+
+通常有的吴总监无法提前预知其子组件的具体内容。例如在 `Sidebar` 和 `Dialog` 等展现通用容器(box)的组件中特别容易遇到这种情况。
+
+这里可以使用一个特殊的prop : `children` 来指代这些未知的内容。
