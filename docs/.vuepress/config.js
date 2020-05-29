@@ -28,13 +28,13 @@ module.exports = {
         "link": "/",
         "icon": "reco-home"
       },
-      {
-        text: 'categories',
-        items: [
-          { text: '基础', link: '/studyBasement/' },
-          { text: '扩展', link: '/studyComponent/' }
-        ]
-      },
+      // {
+      //   text: 'categories',
+      //   items: [
+      //     { text: '基础', link: '/studyBasement/' },
+      //     { text: '扩展', link: '/studyComponent/' }
+      //   ]
+      // },
       // {
       //   "text": "TimeLine",
       //   "link": "/timeline/",
@@ -73,8 +73,7 @@ module.exports = {
     "author": "ZooMze",
     "authorAvatar": "/avatar.png",
     "record": "Nothing here",
-    "startYear": "2020-05",
-    "endYear": "2020-∞"
+    "startYear": "2020-05"
   },
   "markdown": {
     "lineNumbers": true
@@ -90,8 +89,8 @@ module.exports = {
           model: 'wanko',
           display: {
             position: "right", // 显示位置：left/right(default: 'right')
-            width: 135, // 模型的长度(default: 135)
-            height: 300, // 模型的高度(default: 300)
+            width: 160, // 模型的长度(default: 135)
+            height: 350, // 模型的高度(default: 300)
             hOffset: 65, //  水平偏移(default: 65)
             vOffset: 0, //  垂直偏移(default: 0)
           },

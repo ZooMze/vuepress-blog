@@ -1,5 +1,5 @@
 ---
-title: React(更新中)
+title: React 入门
 date: 2020-05-21
 categories:
  - 基础
@@ -8,7 +8,7 @@ tags:
 desc: 本md文档使用了vuepress扩展, 移植时需要注意格式
 ---
 
-# React
+# React 入门
 ~~从入门到放弃~~
 ## 快速开始
 
@@ -25,7 +25,7 @@ React团队推荐的工具链
 * 如果你是在打造组件库或将 React 集成到现有代码仓库，尝试 [更灵活的工具链](https://react.docschina.org/docs/create-a-new-react-app.html#more-flexible-toolchains)。
 
 ### Create React App
-本文推荐Create React App 此工具链, 从头开始搭建一个新的单页应用
+本文推荐 Create React App 此工具链, 从头开始搭建一个新的单页应用
 
 使用前请确保本机Node >= 8.10 && npm >= 5.6
 
@@ -65,13 +65,13 @@ my-app
 至此一个极简的React应用就搭建好了, 你可以在后续的文档学习中实践, 想要了解更多点击这里 [Create React App 中文文档](https://www.html.cn/create-react-app/)。
 ## JSX
 
-```JavaScript
+```jsx
 const element = <h1>Hello, world!</h1>;
 ```
 
 JSX 既不是字符串也不是 HTML, 是一个 JavaScript 的语法扩展, JSX 可以很好地描述 UI 应该呈现出它应有交互的本质形式。
 
-```JavaScript
+```jsx
 const name = 'Josh Perez';
 const element = <h1>Hello, { name } </h1>;
 
@@ -86,7 +86,8 @@ ReactDOM.render(
 **JSX 也是一个表达式**
 
 可以在 if 语句和 for 循环的代码块中使用 JSX，将 JSX 赋值给变量，把 JSX 当作参数传入，以及从函数中返回 JSX
-```JavaScript
+
+```jsx
 function getGreeting(user) {
   if (user) {
     return <h1>Hello, {formatName(user)}</h1>;
@@ -96,7 +97,7 @@ function getGreeting(user) {
 ```
 
 **Babel 会把 JSX 转译成一个名为 `React.createElement()` 函数调用。**
-```JavaScript
+```jsx
 const element = (
   <h1 className="greeting">
     Hello, world!
@@ -119,7 +120,7 @@ const element = React.createElement(
 React 元素是**不可变对象**。一旦被创建，你就无法更改它的子元素或者属性。一个元素就像电影的单帧：它代表了某个特定时刻的 UI。
 更新 UI 唯一的方式是创建一个全新的元素，并将其传入 `ReactDOM.render()`。
 
-```JavaScript
+```jsx
 function tick() {
   const element = (
     <div>
@@ -145,7 +146,7 @@ setInterval(tick, 1000);
 这个参数可以是简单的基本数据类型, 也可以是复杂对象 和 函数。
 
 
-```JavaScript
+```jsx
 // 这两个组件在现在看来完全等效, 但其延伸方向有稍微有区别, 将在下一小节详细说明
 function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
@@ -162,7 +163,7 @@ class Welcome extends React.Component {
 最常见的组件, 类似Vue中的组件, 持有state状态管理, 继承了 `React.component` 。
 此时在组件内 `this` 指向当前组件本身
 
-```JavaScript
+```jsx {3}
   class MyComponent extends React.Component {
     constructor(props) {
       super(props) // 固定调用超类
@@ -180,7 +181,6 @@ class Welcome extends React.Component {
     }
   }
 ```
-**
 
 ::: danger 警告
 和VUE组件相同的是, props内的数据都不应去直接修改, 而是用state维护
@@ -194,7 +194,7 @@ class Welcome extends React.Component {
 ### 组合组件
 
 组件可以在自身内部引用别的组件，也可以任意嵌套, 在JSX中可以直接使用想要的组件
-```JavaScript
+```jsx {8}
 // 这里使用了函数组件, 函数组件非常适合作为子组件
 function Child(props) {
   return <p>I'm child NO.{props.value} </p>;
@@ -231,7 +231,7 @@ React 非常灵活, 但有一条严格的规则:
 State和props类似, state可完全自定义, 并且完全受控于当前组件。
 
 先将之前的例子从函数组件变为class组件:
-```JavaScript
+```jsx
 class Clock extends React.Component {
   render() {
     return (
@@ -246,7 +246,7 @@ class Clock extends React.Component {
 
 向构造函数添加state, 并取消在父组件的入参 `date`, 同时提取`Clock`组件, 完成后代码:
 
-```JavaScript
+```jsx {11}
 class Clock extends React.Component {
   constructor(props) {
     super(props);
@@ -278,7 +278,7 @@ ReactDOM.render(
 
 与Vue相同的是, 生命周期都有对应的hook函数, 在React中被称为'生命周期方法', 例如:
 
-```JavaScript
+```jsx
 class Clock extends React.Component {
   constructor(props) {
     super(props);
@@ -308,7 +308,7 @@ class Clock extends React.Component {
 
 #### 1. 非响应式的State
 
-``` JavaScript
+```jsx
 // Wrong
 this.state.comment = 'Hello';
 
@@ -324,9 +324,11 @@ this.setState({comment: 'Hello'});
 
 React可能会把多个 `setState()` 合并成一个进行调用
 
+::: warning 注意
 `this.props` 和 `this.state` 可能会异步更新, 所以不要期望为同步调用
+:::
 
-``` JavaScript
+```jsx
 // Wrong
 // counter 可能会无法更新
 this.setState({
@@ -356,7 +358,7 @@ this.setState((state, props) => ({
 * React 事件的命名采用小驼峰式（camelCase），而不是纯小写。
 * 使用 JSX 语法时你需要传入一个函数作为事件处理函数，而不是一个字符串。
 
-```JavaScript
+```jsx
 // HTML 的事件处理
 <button onclick="someFunction()">
   doSomething
@@ -371,7 +373,7 @@ this.setState((state, props) => ({
 ### 事件基础
 
 当你创建了一个class组件时, 通常事件处理函数应直接定义为class内的方法
-```JavaScript
+```jsx
 class Toggle extends React.Component {
   constructor(props) {
     super(props);
@@ -417,7 +419,7 @@ ReactDOM.render(
 
 也可以使用实验性的语法 [public class fields 语法](https://babeljs.io/docs/en/babel-plugin-transform-class-properties/), Create React App 默认启用此语法。
 
-```JavaScript
+```jsx
 class LoggingButton extends React.Component {
   // 此语法确保 `handleClick` 内的 `this` 已被绑定。
   // 注意: 这是 *实验性* 语法。
@@ -441,7 +443,7 @@ class LoggingButton extends React.Component {
 
 使用箭头函数会导致每次都重新创建不同的回调函数, 通常情况下没有问题, 但如果将其作为 `props` 传入子组件时, 可能会导致子组件进行额外渲染, 故此方法其实并不推荐使用。
 
-```JavaScript
+```jsx
 class LoggingButton extends React.Component {
   handleClick() {
     console.log('this is:', this);
@@ -462,7 +464,7 @@ class LoggingButton extends React.Component {
 同时由于组件化的模式, 在函数中 `return false` 无法阻止默认行为;
 必须显示地调用 `preventDefault` 来中止, 已阻止a标签跳转为例。
 
-```JavaScript
+```jsx
 // 在普通HTML中
 <a href="#" onclick="console.log('The link was clicked.'); return false">
   Click me
@@ -487,20 +489,20 @@ function ActionLink() {
 
 实际开发流程中, 事件回调通常需要附带一个甚至多个参数
 
-```JavaScript
+```jsx
 <button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
 <button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
 ```
 
 在这两种情况下，React 的事件对象 e 会被作为第二个参数传递。如果通过箭头函数的方式，事件对象必须显式的进行传递，而通过 bind 的方式，事件对象以及更多的参数将会被隐式的进行传递。
 
-## 条件渲染
+### 条件渲染
 
 由于机制的不同, React中的条件渲染是由 '`if`' 或者 '条件运算符' 来控制不同组件之间的渲染逻辑, 而并非Vue中的指令式条件渲染。
 
 以下是一个控制 '登录/登出' 的功能组件, 并根据状态显示相应的组件(对应的操作按钮以及问候语)。
 
-```JavaScript
+```jsx
 class LoginControl extends React.Component {
   constructor(props) {
     super(props);
@@ -547,7 +549,7 @@ ReactDOM.render(
 ### 与运算符 &&
 同时利用 JSX 和 逻辑运算符&& 的特性
 
-```JavaScript
+```jsx
 function Mailbox(props) {
   const unreadMessages = props.unreadMessages;
   return (
@@ -570,7 +572,7 @@ ReactDOM.render(
 ```
 
 JSX对于运算符来说始终为true,:
-```JavaScript
+```jsx
 true && expression  // true
 false && expression // false
 ```
@@ -579,7 +581,7 @@ false && expression // false
 
 基于前面的 && 运算符逻辑, 你可能会立即联想到同样有条件判断特性的三目运算符:
 以下是一个简单的代码片段
-```JavaScript
+```jsx
 render() {
   const isLoggedIn = this.state.isLoggedIn;
   return (
@@ -592,7 +594,7 @@ render() {
 
 当然, 三目运算符也可以用于表达式的处理
 
-```JavaScript
+```jsx
 render() {
   const isLoggedIn = this.state.isLoggedIn;
   return (
@@ -612,7 +614,7 @@ render() {
 
 在某些特殊情况下, 即使完成渲染的组件也有需要隐藏的需求, 实现方法也很简单, 直接在 `render` 中返回 `null` , 则不会渲染任何内容 !
 
-```JavaScript
+```jsx
 function WarningBanner(props) {
   if (!props.warn) {
     // 直接返回null, 不渲染
@@ -666,7 +668,7 @@ ReactDOM.render(
 
 在React中的循环渲染, 同样是依托于JSX进行, 下面简单地使用 `map` 函数进行一个列表的循环渲染
 
-```JavaScript
+```jsx
 function NumberList(props) {
   const numbers = props.numbers;
   const listItems = numbers.map((number) =>
@@ -686,7 +688,7 @@ ReactDOM.render(
 
 这段代码可以成功运行, 但是会收到一条警告: `a key should be provided for list items`, 这表明你在循环输出时需要保证每一个元素需要有一个唯一的 `key` 属性。
 
-```JavaScript
+```jsx
 const listItems = numbers.map((number) =>
   <li key={number.toString()}>
     {number}
@@ -704,7 +706,7 @@ const listItems = numbers.map((number) =>
 
 在 React 里，表单元素通常会保持一些内部的 state。
 
-```js
+```jsx
 <form>
   <label>
     名字:
@@ -725,7 +727,7 @@ const listItems = numbers.map((number) =>
 
 将刚刚的组件稍作修改:
 
-```js
+```jsx
 class NameForm extends React.Component {
   constructor(props) {
     super(props);
@@ -764,7 +766,7 @@ class NameForm extends React.Component {
 
 ::: warning 注意
   你可以将数组传递到 value 属性中，以支持在 select 标签中选择多个选项：
-  ```js
+  ```jsx
     <select multiple={true} value={['B', 'C']}>
   ```
 :::
@@ -779,7 +781,7 @@ class NameForm extends React.Component {
 
 在受控组件上指定 `value` 的 prop 会阻止用户更改输入。如果你指定了 value，但输入仍可编辑，则可能是你意外地将value 设置为 undefined 或 null。
 
-```js
+```jsx
 ReactDOM.render(<input value="hi" />, mountNode);
 
 setTimeout(function() {
@@ -796,7 +798,7 @@ setTimeout(function() {
 
 ### 基础功能
 首先创建一个判断是否煮沸的函数组件: `BoilingVerdict`, 它接受一个摄氏度 `celsius` 作为 `prop`, 并以此作为条件判断是否煮沸。
-```js
+```jsx
 function BoilingVerdict(props) {
   if (props.celsius >= 100) {
     return <p>水可以煮沸!</p>;
@@ -809,7 +811,7 @@ function BoilingVerdict(props) {
 
 然后, 再其内部渲染刚刚创建的 `BoilingVerdict` 组件。
 
-```js
+```jsx
 class Calculator extends React.Component {
   constructor(props) {
     super(props);
@@ -847,7 +849,7 @@ class Calculator extends React.Component {
 
 我们先从组件提取开始: 将原本基础的 `<input>`变为 `TemperatureInput` 组件, 然后为其添加单位的 `prop`
 
-```js
+```jsx
 // 定义单位
 const scaleNames = {
   c: '摄氏度(Celsius)',
@@ -882,7 +884,7 @@ class TemperatureInput extends React.Component {
 
 修改 `Calculator` 组件中的input:
 
-```js
+```jsx
 class Calculator extends React.Component {
   render() {
     return (
@@ -897,7 +899,7 @@ class Calculator extends React.Component {
 
 输入框准备完毕后, 我们还需要一个转换两种温度的函数:
 
-```js
+```jsx
 function toCelsius(fahrenheit) {
   return (fahrenheit - 32) * 5 / 9;
 }
@@ -909,7 +911,7 @@ function toFahrenheit(celsius) {
 
 然后再编写一个使用如上两个函数的函数, 这个函有两个参数: 第一个 `string`类型, 为输入的温度数据; 第二个 `function`类型, 为需要执行的操作函数。
 
-```js
+```jsx
 function tryConvert(temperature, convertFunction) {
   const input = parseFloat(temperature);
   if (Number.isNaN(input)) {
@@ -939,7 +941,7 @@ function tryConvert(temperature, convertFunction) {
 
 当 `TemperatureInput` 组件想要向上更新温度数据时, 只需要调用 `this.props.onTemperatureChange()`
 
-```js
+```jsx
  handleChange(e) {
     // Before: this.setState({temperature: e.target.value});
     this.props.onTemperatureChange(e.target.value);
@@ -953,7 +955,7 @@ function tryConvert(temperature, convertFunction) {
 
 `onTemperatureChange` 的 `prop` 和 `temperature` 的 `prop` 一样，均由父组件 `Calculator` 提供。它通过修改父组件自身的内部 `state` 来处理数据的变化，进而使用新的数值重新渲染两个输入框。
 
-```js
+```jsx
 class TemperatureInput extends React.Component {
   constructor(props) {
     super(props);
@@ -983,7 +985,7 @@ class TemperatureInput extends React.Component {
 
 子组件 `TemperatureInput` 处理好了, 然后是父组件 `Calculator`, 父组件中持有 `temperature` 和 `scale` 这两个状态数据, 这就是由子组件所 "提升" 上来的数据, 他们是这样的:
 
-```js
+```jsx
 // 在摄氏度的输入框中输入 '123', 现在的Calculator组件中的state是这样的
 {
   temperature: '123',
@@ -1003,7 +1005,7 @@ class TemperatureInput extends React.Component {
 
 现在 你的 `Caculator` 组件变成了这样:
 
-```js
+```jsx
 class Calculator extends React.Component {
   constructor(props) {
     super(props);
@@ -1057,7 +1059,7 @@ class Calculator extends React.Component {
 
 * 起初渲染时，用于摄氏度输入的子组件 `TemperatureInput` 中的 `onTemperatureChange` 方法与 `Calculator` 组件中的 `handleCelsiusChange` 方法相同，而，用于华氏度输入的子组件 `TemperatureInput` 中的 `onTemperatureChange` 方法与 `Calculator` 组件中的 `handleFahrenheitChange` 方法相同。因此，无论哪个输入框被编辑都会调用 `Calculator` 组件中对应的方法。
 
-* `在这些方法内部，Calculator` 组件通过使用新的输入值与当前输入框对应的温度计量单位来调用 `this.setState()` 进而请求 React 重新渲染自己本身。
+* 在这些方法内部，`Calculator` 组件通过使用新的输入值与当前输入框对应的温度计量单位来调用 `this.setState()` 进而请求 React 重新渲染自己本身。
 
 * React 调用 `Calculator` 组件的 `render` 方法得到组件的 UI 呈现。温度转换在这时进行，两个输入框中的数值通过当前输入温度和其计量单位来重新计算获得。
 
@@ -1075,3 +1077,29 @@ class Calculator extends React.Component {
 
 这里可以使用一个特殊的prop : `children` 来指代这些未知的内容。
 
+```jsx {4}
+function FancyBorder(props) {
+  return (
+    <div className={'FancyBorder FancyBorder-' + props.color}>
+      {props.children}
+    </div>
+  );
+}
+```
+
+现在再其他地方使用 `FancyBorder` 这个组件时, 可以在其内部嵌套任意其他组件, 这些组件都直接作为 `FancyBorder` 的子组件。
+
+```jsx {4-9}
+function WelcomeDialog() {
+  return (
+    <FancyBorder color="blue">
+      <h1 className="Dialog-title">
+        Welcome
+      </h1>
+      <p className="Dialog-message">
+        Thank you for visiting!
+      </p>
+    </FancyBorder>
+  );
+}
+```
