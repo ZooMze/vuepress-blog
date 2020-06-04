@@ -1,6 +1,6 @@
 ---
 title: Ant Design 
-date: 2020-05-20
+date: 2020-05-29
 categories:
  - 扩展
 tags:
@@ -151,7 +151,7 @@ antd使用了 `less`, 提供了全局的样式变量可供覆盖修改:
 @box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.15); // 浮层阴影
 ```
 
-更多变量可以在本地文件 `/components/style/themes/default.less` 中查看,或者查看 (这里)[https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less]
+更多变量可以在本地文件 `/components/style/themes/default.less` 中查看,或者查看 [这里](https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less)
 
 
 

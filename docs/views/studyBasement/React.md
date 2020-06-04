@@ -1,6 +1,6 @@
 ---
 title: React 入门
-date: 2020-05-21
+date: 2020-05-25
 categories:
  - 基础
 tags:
@@ -22,10 +22,11 @@ React团队推荐的工具链
 * 如果你是在学习 React 或创建一个新的单页应用，请使用 [Create React App](https://react.docschina.org/docs/create-a-new-react-app.html#create-react-app)。
 * 如果你是在用 Node.js 构建服务端渲染的网站，试试 [Next.js](https://react.docschina.org/docs/create-a-new-react-app.html#nextjs)。
 * 如果你是在构建面向内容的静态网站，试试 [Gatsby](https://react.docschina.org/docs/create-a-new-react-app.html#gatsby)。
-* 如果你是在打造组件库或将 React 集成到现有代码仓库，尝试 [更灵活的工具链](https://react.docschina.org/docs/create-a-new-react-app.html#more-flexible-toolchains)。
+* 结合实际开发需要, 当然有直接集成好的脚手架会是更好的选择, 如 [Ant Design Pro](https://pro.ant.design/index-cn)。
+
 
 ### Create React App
-本文推荐 Create React App 此工具链, 从头开始搭建一个新的单页应用
+由于是从头学习 React, 本文推荐 Create React App 此工具链, 从头开始搭建一个新的单页应用, 理解React的基本内容。
 
 使用前请确保本机Node >= 8.10 && npm >= 5.6
 
