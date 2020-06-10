@@ -8,8 +8,6 @@ tags:
 desc: 本md文档使用了vuepress扩展, 移植时需要注意格式
 ---
 
-# Vue
-
 ## 基础
 
 ### 在computed()中传递参数

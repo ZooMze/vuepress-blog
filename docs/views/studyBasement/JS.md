@@ -7,8 +7,6 @@ tags:
  - JavaScript
 ---
 
-# JavaScript
-
 ## 基础
 
 ### call()、apply()、bind()

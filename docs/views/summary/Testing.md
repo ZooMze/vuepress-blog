@@ -6,7 +6,6 @@ categories:
 tags:
  - JavaScript
 ---
-# JavaScript 基础题精选(共20道)
 
 ## 1.parseInt 与 map()
  写出以下代码的输出值, 并写出解答过程

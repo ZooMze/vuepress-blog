@@ -8,8 +8,6 @@ tags:
  - Ant Design
 ---
 
-# Ant Design
-
 本文章推荐先阅读 [React 基础](./React) 后在进行阅读
 
 从零搭建一个React是实际应用, 这里使用了[Ant Design](https://ant-design.gitee.io/docs/react/use-with-create-react-app-cn), 文档中已经有较详细的指引内容, 故本文重在细节延伸说明等内容。

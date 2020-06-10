@@ -1,15 +1,17 @@
 ---
 title: React 入门
-date: 2020-05-25
+date: 2020-05-29
 categories:
  - 基础
+ - 教程
 tags:
  - React
 desc: 本md文档使用了vuepress扩展, 移植时需要注意格式
 ---
 
-# React 入门
 ~~从入门到放弃~~
+
+<!-- more -->
 ## 快速开始
 
 ### 通过标签引入

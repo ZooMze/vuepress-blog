@@ -7,8 +7,6 @@ tags:
  - GoJS
 ---
 
-# GOJS 中文学习文档
-
 依赖HTML5 需要在页面中声明
 开发模式使用 `go-debug.js` 部署模式使用 `go.js`
 

@@ -24,19 +24,12 @@ module.exports = {
     "modePicker": false,
     "nav": [
       {
-        "text": "Home",
+        "text": "主页",
         "link": "/",
         "icon": "reco-home"
       },
       // {
-      //   text: 'categories',
-      //   items: [
-      //     { text: '基础', link: '/studyBasement/' },
-      //     { text: '扩展', link: '/studyComponent/' }
-      //   ]
-      // },
-      // {
-      //   "text": "TimeLine",
+      //   "text": "时光轴",
       //   "link": "/timeline/",
       //   "icon": "reco-date"
       // },
@@ -57,22 +50,22 @@ module.exports = {
         "text": "标签"
       }
     },
-    "friendLink": [
-      {
-        "title": "vuepress-theme-reco",
-        "desc": "A simple and beautiful vuepress Blog & Doc theme.",
-        "avatar": "https://vuepress-theme-reco.recoluan.com/icon_vuepress_reco.png",
-        "link": "https://vuepress-theme-reco.recoluan.com"
-      }
-    ],
+    // "friendLink": [
+    //   {
+    //     "title": "vuepress-theme-reco",
+    //     "desc": "A simple and beautiful vuepress Blog & Doc theme.",
+    //     "avatar": "https://vuepress-theme-reco.recoluan.com/icon_vuepress_reco.png",
+    //     "link": "https://vuepress-theme-reco.recoluan.com"
+    //   }
+    // ],
     "logo": "/logo.png",
     "search": true,
-    "searchMaxSuggestions": 10,
+    "searchMaxSuggestions": 5,
     "sidebar": "auto",
     "lastUpdated": "Last Updated",
     "author": "ZooMze",
     "authorAvatar": "/avatar.png",
-    "record": "Nothing here",
+    "record": "Maybe not safe",
     "startYear": "2020"
   },
   "markdown": {
