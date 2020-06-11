@@ -28,11 +28,11 @@ module.exports = {
         "link": "/",
         "icon": "reco-home"
       },
-      // {
-      //   "text": "时光轴",
-      //   "link": "/timeline/",
-      //   "icon": "reco-date"
-      // },
+      {
+        "text": "时光轴",
+        "link": "/timeline/",
+        "icon": "reco-date"
+      },
       {
         "text": "GitHub",
         "link": "https://github.com/ZooMze",
