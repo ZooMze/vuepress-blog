@@ -72,6 +72,7 @@ module.exports = {
     "lineNumbers": true
   },
   plugins: [
+    'flowchart',
     [
       'vuepress-plugin-helper-live2d', {
         live2d: {

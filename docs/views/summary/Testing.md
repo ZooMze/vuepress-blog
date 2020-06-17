@@ -1,6 +1,6 @@
 ---
 title: JavaScript 基础题精选(共20道)
-date: 2020-05-21
+date: 2019-12-21
 categories:
  - 基础
 tags:

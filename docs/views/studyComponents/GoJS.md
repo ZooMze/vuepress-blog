@@ -1,6 +1,6 @@
 ---
 title: GOJS 中文学习文档
-date: 2020-05-20
+date: 2020-04-03
 categories:
  - 扩展
 tags:

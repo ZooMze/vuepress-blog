@@ -59,6 +59,17 @@ avatar | 头像 | 展示一个头像
 **width** | 列的宽度，可不指定 | number | -
 **order** | 决定在 查询表单中的顺序，越大越在前面 | number | -
 
+## Request
+
+proTable的数据由request来驱动，他有内置参数, 即是当前的表单搜索条件和分页的内容, 所以你只需要在其中添加你自己的请求数据的方法即可:
+
+```jsx
+...
+request={params => getData(params)} // getData in service.js
+...
+```
+
+
 ## Render
 
 你可以理解为这就是Vue中的插槽, 在此方法中 `return` 组件, 并执行相关操作:
