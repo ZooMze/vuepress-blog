@@ -1,7 +1,7 @@
 module.exports = {
   "title": "ZooMze\'s World",
   "description": "Code your dream!",
-  "dest": "dist",
+  "dest": "docs/.vuepress/dist",
   "base": '/vuepress-blog/',
   "head": [
     [

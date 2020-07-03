@@ -306,8 +306,9 @@ const columns = [
         ]}
       />,
     ],
-  },
-];
+  }
+]
+
 export default () => (
   <ProTable
     columns={columns}

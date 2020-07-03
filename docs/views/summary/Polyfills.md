@@ -79,7 +79,7 @@ module.exports = {
 }
 ```
 
-## Umi 3.X
+## Umi 3.x
 
 在Umi中配置更加简单, 类似vue的polyfills的配置, 直接在 `targets` 配置即可, `targets` 是一个对象, 它接收一些浏览器以及其最低版本:
 
