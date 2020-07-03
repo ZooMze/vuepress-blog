@@ -8,6 +8,7 @@ tags:
  - React
  - Ant Design
  - Ant Design Pro
+ - Umi 3.x
 ---
 
 基于umi 和 dva 的脚手架

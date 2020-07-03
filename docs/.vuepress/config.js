@@ -2,6 +2,7 @@ module.exports = {
   "title": "ZooMze\'s World",
   "description": "Code your dream!",
   "dest": "dist",
+  "base": '/vuepress-blog/',
   "head": [
     [
       "link",
@@ -21,7 +22,6 @@ module.exports = {
   "theme": "reco",
   "themeConfig": {
     "mode": "light",
-    "modePicker": false,
     "nav": [
       {
         "text": "主页",

@@ -8,6 +8,7 @@ tags:
  - React
  - Ant Design
  - Ant Design Pro
+ - Umi 3.x
 ---
 
 <!-- 还在纠结重复写表格一遍又一遍吗, 来试试ProTable! -->

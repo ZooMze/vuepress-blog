@@ -18,7 +18,7 @@ JavaScript 是单线程语言, 如果没有异步编程, 那整个执行过程�
 
 * **回调函数**
 * **事件监听**
-* **发布 / 订阅**
+* **[发布 / 订阅]()**
 * **Promise**
   
 ES6的出现, 将异步编程提升到了全新的高度, 异步编程的终极目标就是: **让代码变得更像同步编程**!
@@ -244,9 +244,9 @@ var asyncReadFile = async function (){
 
 发现了吗, 其实就是把 `*` 提到前面换成了 `async`, 把 `yield` 换成了 `await` !
 
-## Async的应用
+## Async的错误处理
 
-`async` 函数返回一个Promise对象, 所以有可能会返回 `reject`, 这时候就需要进行错误处理:
+`async` 函数返回一个Promise对象, 所以有可能会返回 `reject`, 这时候就需要进行错误处理, 我们使用 `try catch` 进行错误捕捉:
 
 ```js
 async function myFunction() {
@@ -257,7 +257,7 @@ async function myFunction() {
   }
 }
 
-// make it in an easier way
+// 或者写得更简单些
 
 async function myFunction() {
   await somethingThatReturnsAPromise().catch(function (err){
