@@ -5,7 +5,6 @@ categories:
  - 基础
 tags:
  - Vue
-desc: 本md文档使用了vuepress扩展, 移植时需要注意格式
 ---
 
 ## 基础
@@ -30,16 +29,6 @@ desc: 本md文档使用了vuepress扩展, 移植时需要注意格式
   }
 ...
 ```
-
-## Vuepress
-
-### 安装并使用
-
-### 引用第三方库
-
-### 使用Vue组件
-在vuepress中, 可以直接在md文件中插入vue组件, 就像使用.vue文件一样
-
 
 ## Vue-Router
 

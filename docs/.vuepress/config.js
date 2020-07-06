@@ -22,6 +22,10 @@ module.exports = {
   "theme": "reco",
   "themeConfig": {
     "mode": "light",
+    "valineConfig": {
+      "appId": "uVNTTQ5SJQa7rwYGDuK1QDhj-gzGzoHsz",// your appId
+      "appKey": "6Ue7SUHOntstcHVTcWB3ikrm", // your appKey
+    },
     "nav": [
       {
         "text": "主页",

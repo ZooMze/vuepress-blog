@@ -2,13 +2,12 @@
 title: ElementUI 踩坑
 date: 2019-03-05
 categories:
- - 扩展
+ - 备忘
 tags:
  - Element UI
 ---
 
-## 技巧要点
-
+## 技巧与要点
 ### 表格的固定表头与最大高度
 官方文档描述为直接添加`height`属性, 但是通常情况下, 我们更希望是根据数据的长度动态控制, 当达到一定数量时才进行高度限制
 
@@ -93,7 +92,7 @@ watch: {
 ### Table无数据的高度异常
 在固定了表格的情况下, 若出现无数据的情况时, 则会导致如下情况发生:
 
-![图片](/images/element-table-no-data.png)
+![图片](./../../.vuepress/public/images/element-table-no-data.png)
 
 此时为无数据时添加动态的class以及对应的样式即可:
 ```css

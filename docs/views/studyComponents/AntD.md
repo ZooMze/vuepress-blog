@@ -3,10 +3,14 @@ title: Ant Design
 date: 2020-05-29
 categories:
  - 扩展
+ - 框架
+ - 组件
 tags:
  - React
  - Ant Design
 ---
+
+\* **不再使用的内容, 仅供扩展阅读, 本站点内已有文档对脚手架 [Ant Design Pro](./AntDesignPro.md) 作为解决方案。**
 
 本文章推荐先阅读 [React 基础](./React) 后在进行阅读
 
@@ -152,16 +156,4 @@ antd使用了 `less`, 提供了全局的样式变量可供覆盖修改:
 更多变量可以在本地文件 `/components/style/themes/default.less` 中查看,或者查看 [这里](https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less)
 
 
-
-## 路由解决方案
-
-React Router 保持 `UI` 与 `URL` 同步。它拥有简单的 API 与强大的功能例如代码缓冲加载、动态路由匹配、以及建立正确的位置过渡处理。你第一个念头想到的应该是 URL，而不是事后再想起。
-
-源码在这里: [react-router](https://github.com/ReactTraining/react-router)
-
-### 安装
-
-```
-npm install --save react-router
-```
 
