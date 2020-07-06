@@ -1,6 +1,6 @@
 ---
 title: 获取和设置本机的SSH keys
-date: 2022-07-12
+date: 2020-07-01
 categories:
  - 教程
  - 备忘

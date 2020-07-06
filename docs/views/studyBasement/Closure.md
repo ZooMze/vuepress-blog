@@ -216,3 +216,29 @@ gAlertNumber(); // >> 1891
 :::
 
 ### 延长局部变量的生命
+日常开发时，Image对象经常被用于数据统计的上报，示例代码如下：
+
+```js
+var report = function(src) {
+  var img = new Image();
+  img.src = src; // resolve Cross-orgin Request
+}
+
+report('http://www.xxx.com/getClientInfo'); // 把客户端信息上报数据
+```
+
+这段代码在运行时，发现在一些低版本浏览器上存在bug，会丢失部分数据上报。原因是 `Image` 对象是 `report()`函数中的局部变量，当 `report()` 函数调用结束后，`Image` 对象随即被JS引擎垃圾回收器回收，而此时可能还没来得及发出http请求，所以可能导致此次上报数据的请求失败。
+怎么办呢？我们可以使用闭包把Image对象封闭起来，就可以解决数据丢失的问题，代码如下：
+
+```js
+var report = (function() {
+  var imgs = [];//在内存里持久化
+  return function(src) {
+    var img = new Image();
+    imgs.push(img);//引用局部变量imgs
+    img.src = src;
+  }
+}());
+
+report('http://www.xxx.com/getClientInfo');//把客户端信息上报数据
+```
