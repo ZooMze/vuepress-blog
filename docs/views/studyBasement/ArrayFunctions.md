@@ -48,20 +48,20 @@ console.log(numbers.map(function(item){
 //输出[650,440,120,40]
 用es5手动实现一下
 (function(){
-    function myMap(cb, obj){
-    	// map()不会对空数组进行检测
-    	if(this.length == 0) return;
-        //不改变原数组，不暴露原数组给调用者
-    	var _this = this.slice();
-        var arr = [];
-        //如果第二个参数没传，默认是全局对象
-        obj ? null : obj = window;
-    	for(var i=0; i<_this.length; i++){
-        	arr.push(cb.call(obj, _this[i], i, _this));
-        }
-        return arr;
+  function myMap(cb, obj){
+    // map()不会对空数组进行检测
+    if(this.length == 0) return;
+      //不改变原数组，不暴露原数组给调用者
+    var _this = this.slice();
+    var arr = [];
+    //如果第二个参数没传，默认是全局对象
+    obj ? null : obj = window;
+    for(var i=0; i<_this.length; i++){
+      arr.push(cb.call(obj, _this[i], i, _this));
     }
-    Array.prototype.myMap = myMap;
+    return arr;
+  }
+  Array.prototype.myMap = myMap;
 })();
 ```
 
@@ -82,6 +82,7 @@ __回调函数参数__：`currentValue`  必需。当前元素； `index`  �
 
 ```js
 var ages = [3, 10, 18, 20];
+
 console.log(ages.some(function(item){
 	return item > 28;
 }))
