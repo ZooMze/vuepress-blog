@@ -1,6 +1,6 @@
 ---
 title: 深入理解 call、apply、bind
-date: 2019-05-21
+date: 2018-05-09
 categories:
  - 基础
  - 备忘

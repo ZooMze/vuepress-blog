@@ -1,6 +1,6 @@
 ---
 title: 一些有用和备忘的东西
-date: 2019-04-08
+date: 2018-04-08
 categories:
  - 备忘
 sidebar: false
