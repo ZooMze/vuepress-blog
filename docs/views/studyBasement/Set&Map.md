@@ -34,8 +34,13 @@ Set集合可以是多维数据, 多维数据时无法直接使用 `has()` 方法
 :::
 
 ### Set的遍历
-
 由于不是数组, 并不能直接通过下标进行直接访问成员值, 也无法直接访问其`length`, 实际上访问时是在访问Set的 [内建迭代器](./Iterator&Generator.md#内建迭代器) `entries()` 尽管在浏览器中直接打印Set集合的值看起来是有下标存在的。
+
+![setSize](./../../.vuepress/public/images/set&map/setSize.png)
+
+::: tip 注意
+Set集合没有 `length` 属性, 其长度是由 `size` 属性所提供的成员总数
+:::
 
 Set集合的实例可用如下四个遍历方法:
 
@@ -58,14 +63,7 @@ set.forEach(value, key, SetObj) {
 }
 ```
 
-::: tip 注意
-Set集合没有 `length` 属性, 其长度是由 `size` 属性所提供的成员总数
-:::
-
-
-
 ## Map
-
 Map是JavaScript的对象(Object), 即键值对的集合, 但通常的对象仅能使用字符串作为键名 `key`, Map就有所不同。
 
 Map打破了上述的 **键(string)-值** 对应关系, 使得Object的定义更广泛: **值-值**, 也就是说, 各种类型的数据都可以当做键(包括Object):
@@ -104,4 +102,5 @@ Map函数有如下方法
 Map集合同样无法直接使用 `has()` 方法判断以对象作为键key的成员
 :::
 
-Map可以以Set同样的方式进行[遍历](./Set&Map.md#set的遍历), 不在赘述
+### 遍历
+Map可以以Set同样的方式进行[遍历](./Set&Map.md#set的遍历), 在此不再赘述
