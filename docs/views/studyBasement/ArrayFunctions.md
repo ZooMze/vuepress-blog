@@ -138,20 +138,20 @@ console.log(sum)
 //输出430
 用es5手动实现一下
 (function(){
-    function myReduce(cb, initValue){
-    	//不对空数组进行检测
-    	if(this.length == 0) return;
-        //不改变原数组，不暴露原数组给调用者
-        var arr = this.slice();
-        var startIndex = 1;
-        //如果有传第二个参数，则从索引为0开始遍历，否则initValue = arr[0]从索引为1开始遍历
-        initValue ? startIndex = 0 : initValue = arr[0];
-        for(var i=startIndex; i<arr.length; i++){
-            initValue = cb(initValue, arr[i], i, arr);
-        }
-        return initValue;
+  function myReduce(cb, initValue){
+    //不对空数组进行检测
+    if(this.length == 0) return;
+    //不改变原数组，不暴露原数组给调用者
+    var arr = this.slice();
+    var startIndex = 1;
+    //如果有传第二个参数，则从索引为0开始遍历，否则initValue = arr[0]从索引为1开始遍历
+    initValue ? startIndex = 0 : initValue = arr[0];
+    for(var i=startIndex; i<arr.length; i++){
+      initValue = cb(initValue, arr[i], i, arr);
     }
-    Array.prototype.myReduce = myReduce;
+    return initValue;
+  }
+  Array.prototype.myReduce = myReduce;
 })();
 ```
  
