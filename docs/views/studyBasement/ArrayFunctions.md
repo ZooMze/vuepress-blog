@@ -16,7 +16,7 @@ tags:
 `forEach()` 对于空数组是不会执行回调函数的。
 :::
 
-__回调函数参数__：currentValue  必需。当前元素； index  可选。当前元素的索引值； arr  可选。当前元素所属的数组对象。
+__回调函数参数__：`currentValue`  必需。当前元素； `index`  可选。当前元素的索引值； `arr`  可选。当前元素所属的数组对象。
 
 ## 2、filter(过滤，返回新数组)
 `filter()` 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。
@@ -26,7 +26,7 @@ __回调函数参数__：currentValue  必需。当前元素； index  可选
 * `filter()` 不会改变原始数组。
 :::
 
-__回调函数参数__：currentValue  必需。当前元素； index  可选。当前元素的索引值； arr  可选。当前元素所属的数组对象。
+__回调函数参数__：`currentValue` 必需。当前元素；`index` 可选。当前元素的索引值；`arr` 可选。当前元素所属的数组对象。
 
 ## 3、map(映射，返回新数组)
 `map()` 方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值。
@@ -38,7 +38,7 @@ __回调函数参数__：currentValue  必需。当前元素； index  可�
 * `map()` 不会改变原始数组。
 :::
 
-__回调函数参数__：currentValue  必需。当前元素； index  可选。当前元素的索引值； arr  可选。当前元素所属的数组对象。
+__回调函数参数__：`currentValue`  必需。当前元素； `index`  可选。当前元素的索引值； `arr`  可选。当前元素所属的数组对象。
 
 ```js
 var numbers = [65, 44, 12, 4];
@@ -78,7 +78,7 @@ console.log(numbers.map(function(item){
 * `some()` 不会改变原始数组。
 :::
 
-__回调函数参数__：currentValue  必需。当前元素； index  可选。当前元素的索引值； arr  可选。当前元素所属的数组对象。
+__回调函数参数__：`currentValue`  必需。当前元素； `index`  可选。当前元素的索引值； `arr`  可选。当前元素所属的数组对象。
 
 ```js
 var ages = [3, 10, 18, 20];
@@ -101,7 +101,7 @@ console.log(ages.some(function(item){
 * `every()` 不会改变原始数组。
 :::
 
-__回调函数参数__：currentValue  必需。当前元素； index  可选。当前元素的索引值； arr  可选。当前元素所属的数组对象。
+__回调函数参数__：`currentValue`  必需。当前元素； `index`  可选。当前元素的索引值； `arr`  可选。当前元素所属的数组对象。
 
 ```js
 var ages = [32, 33, 16, 40];
@@ -120,7 +120,7 @@ console.log(ages.every(function(item){
 `reduce()` 对于空数组是不会执行回调函数的。
 :::
 
-__回调函数参数__：total  必需。初始值, 或者计算结束后的返回值； currentValue  必需。当前元素； index  可选。当前元素的索引值； arr  可选。当前元素所属的数组对象。
+__回调函数参数__：`total`  必需。初始值, 或者计算结束后的返回值； `currentValue` 必需。当前元素； `index`  可选。当前元素的索引值； `arr`  可选。当前元素所属的数组对象。
 
 ```js
 var arr = [{price:30,count:2},{price:40,count:3},{price:50,count:5}];
