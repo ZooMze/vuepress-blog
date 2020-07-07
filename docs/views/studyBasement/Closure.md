@@ -1,6 +1,6 @@
 ---
 title: JavaScript的闭包(closure)
-date: 2020-06-22
+date: 2019-06-22
 categories:
  - 基础
 tags:
@@ -8,7 +8,7 @@ tags:
  - ES6
 ---
 
-传说中面试必考内容?
+老生常谈的内容了, 今天才想起总结下...
 
 <!-- more -->
 

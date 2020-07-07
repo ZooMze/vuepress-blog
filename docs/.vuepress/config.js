@@ -66,11 +66,11 @@ module.exports = {
     "search": true,
     "searchMaxSuggestions": 5,
     "sidebar": "auto",
-    "lastUpdated": "Last Updated",
+    "lastUpdated": false,
     "author": "ZooMze",
     "authorAvatar": "/avatar.png",
     "record": "Maybe not safe",
-    "startYear": "2020"
+    "startYear": "2018"
   },
   "markdown": {
     "lineNumbers": true

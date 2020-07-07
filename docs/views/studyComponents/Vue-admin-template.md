@@ -7,7 +7,7 @@ categories:
 tags:
  - Vue
  - Vue-Cli 3.x 
- - Element UI
+ - ElementUI
  - polyfills
 ---
 

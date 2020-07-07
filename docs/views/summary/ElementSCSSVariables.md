@@ -4,7 +4,7 @@ date: 2020-06-28
 categories:
  - 备忘
 tags:
- - Element UI
+ - ElementUI
  - SCSS
 ---
 
