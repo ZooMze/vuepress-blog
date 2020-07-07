@@ -15,6 +15,7 @@ tags:
 这里可以参考 [官网文档](https://vuepress.vuejs.org/zh/guide/deploy.html#github-pages)
 
 ### 部署
+
 本文的部署情况皆为举例, 你需要按实际情况进行修改。进入正题, 将文档部署到附带 `base` ( vuepress-blog )路径的地址下:
 首先在 config.js 下确认dist输出位置和 `base` 的配置:
 

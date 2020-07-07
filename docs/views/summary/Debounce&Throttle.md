@@ -1,6 +1,6 @@
 ---
 title: 防抖debounce 和 节流throttle
-date: 2018-09-16
+date: 2019-10-16
 categories:
  - 备忘
  - 教程
