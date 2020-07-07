@@ -9,6 +9,7 @@ tags:
 ---
 
 ## 前言
+
 为什么GitHub需要SSH Key呢？
 
 因为GitHub需要识别出你推送的提交确实是你推送的，而不是别人冒充的，而Git支持SSH协议，所以，GitHub只要知道了你的公钥，就可以确认只有你自己才能推送。
@@ -30,6 +31,7 @@ tags:
 如果没有, 则开始第2步, 创建SSH Key
 
 ## 2.创建 SSH Key
+
 打开Shell（Windows下打开Git Bash），运行以下命令
 
 `$ ssh-keygen -t rsa -C "youremail@example.com"`
@@ -46,17 +48,53 @@ tags:
 
 ![进入配置](./../../.vuepress/public/images/settingSSH/sshKeysSettings.png)
 
-
 ## 其他问题
 
-如果添加了还是出现这个问题，那么问题大概率就定位在了你本机的这个git仓库并没有和这个SSH key 关联上。用下述方法解决：
-ssh-add "你的 id-rsa 文件地址"
-注意这里ssh-add后面填的是私钥地址，如mac电脑是 /Users/用户名/.ssh/id_rsa
+### Git Bash 的问题
 
-add之后可以用
+如果添加了还是出现这个问题，那么问题大概率就定位在了你本机的这个git仓库并没有和这个SSH key 关联上。用下述方法解决:
 
-`$ ssh git@github.com`
+`$ ssh-add 你的id_rsa文件地址`
 
-验证是不是添加成功。
+注意这里ssh-add后面填的是私钥id_rsa的地址，例如 C:/用户/Admin/.ssh/id_rsa
 
-参考文档: [https://blog.csdn.net/dotphoenix/article/details/100130424](https://blog.csdn.net/dotphoenix/article/details/100130424)
+如果add这一步失败的话， 运行如下命令：
+
+`$ ssh-agent -s`
+
+之后再次add，如果仍然报错:
+
+`Could not open a connection to your authentication agent.`
+
+那么再运行如下命令：
+
+`$ ssh-agent bash`
+
+然后再再次add, 成功之后出现:
+
+`Identity added: /c/Users/Admin/.ssh/id_rsa (你的邮箱地址)`
+
+验证是不是添加成功的命令:
+
+`$ ssh -T git@github.com`
+
+看到这句话就OK咯:
+
+`Hi 你的用户名! You've successfully authenticated, but GitHub does not provide shell access.`
+
+### TortoiseGit 的问题
+
+按照上述方法配置完之后你会发现, TortoiseGit还是用不了, 这是为啥捏? 因为TortoiseGit默认是PuTTY密钥, 如果安装时一路下一步下一步, 那么公钥是对不上滴, 那么需要再来重新来他配置OpenSSH
+
+进入TortoiseGit / 设置 / 常规设置 / 重新运行首次启动向导
+
+![TortoiseGit](./../../.vuepress/public/images/settingSSH/sshTortoiseGit.png)
+
+配置完成后, 跟Git Bash配置好的SSH公钥可以一起使用, 两者互不干扰
+
+参考资料:
+[https://blog.csdn.net/dotphoenix/article/details/100130424](https://blog.csdn.net/dotphoenix/article/details/100130424)
+
+[https://blog.csdn.net/qq_19393857/article/details/81629431](https://blog.csdn.net/qq_19393857/article/details/81629431)
+
+[https://www.jianshu.com/p/7d57ce4147d3](https://www.jianshu.com/p/7d57ce4147d3)

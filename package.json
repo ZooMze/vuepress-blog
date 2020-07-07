@@ -15,6 +15,7 @@
   },
   "description": "desc",
   "dependencies": {
-    "vuepress-plugin-helper-live2d": "^1.0.0"
+    "vuepress-plugin-helper-live2d": "^1.0.0",
+    "yarn": "^1.22.4"
   }
 }
