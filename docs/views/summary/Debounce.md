@@ -12,7 +12,7 @@ tags:
 
 虽然前人栽的大树([lodash](https://www.lodashjs.com/)) , ([underscore](https://underscorejs.net/))已经足够乘凉了, 但是用归用, 这防抖的知识以及原理还是要掌握呀, 那么本文就来探讨下这个, 参考了掘金上一堆文章, 然后自己来总结下。
 
-还有一篇 节流 throttle, coming soon...
+还有一篇 [节流 throttle](./Debounce.md) 哦
 
 ## 为啥要做防抖
 
@@ -32,7 +32,7 @@ container.onmousemove = getUserAction;
 
 然后鼠标在页面上随便划拉几下, 就会发现事件疯狂调用了一百多次:
 
-![mousemove](./../../.vuepress/public/images/debounce&throttle/firstConsole.png)
+![mousemove](./../../.vuepress/public/images/debounce/firstConsole.png)
 
 当然, 现在浏览器处理这点小事还是绰绰有余, 即使毫秒级别为间隔也给你同步处理好了, 但是如果 `getUserAction` 函数内复杂一点, 例如大量的数据修改、 I/O、 异步请求等, 浏览器就不见得能顺滑地处理这么大批的任务了, 所以为了解决这个隐患, 就得请出本文的主角: **防抖 debounce**
 
@@ -70,9 +70,9 @@ container.onmousemove = debounce(getUserAction, 1000);
 
 现在将打印的内容改为 `console.log(this)`, 看看在使用和不使用刚刚写的防抖函数的情况下, 输出了些什么
 
-![mousemove](./../../.vuepress/public/images/debounce&throttle/this.png
+![mousemove](./../../.vuepress/public/images/debounce/this.png
 )
-![mousemove](./../../.vuepress/public/images/debounce&throttle/thisDebounce.png
+![mousemove](./../../.vuepress/public/images/debounce/thisDebounce.png
 )
 
 在调用防抖函数后, `this` 的指向竟然跑到  `window` 对象上去了, 由于 `setTimeout()` 调用的代码运行在与所在函数完全分离的执行环境上。这会导致这些代码中包含的 `this` 关键字会指向 `window` (或全局)对象。
@@ -118,7 +118,7 @@ function getUserAction() {
 
 发现了吗, 这里其实就是闭包
 
-![mousemove](./../../.vuepress/public/images/debounce&throttle/thisClosure.png
+![mousemove](./../../.vuepress/public/images/debounce/thisClosure.png
 )
 
 好了, 现在指向正确啦!
@@ -185,7 +185,7 @@ function debounce(func, wait, immediate) {
 
 一个函数除了有参数 , 还会有返回值哦, 所以 `getUserAction()` 也是可能有返回值的哦, 在上一版的代码中给 `getUserAction()` 添加返回值, 再调用这个事件, 会发现`return undefined`
 
-![functionReturn](./../../.vuepress/public/images/debounce&throttle/functionReturn.png)
+![functionReturn](./../../.vuepress/public/images/debounce/functionReturn.png)
 
 当 `immediate` 为 `false` 的时候，因为使用了 `setTimeout` ，我们将 `func.apply(context, args)` 的返回值赋给变量，最后再 `return` 的时候，值将会一直是 `undefined` ，所以我们只在 `immediate` 为 true 的时候返回函数的执行结果。
 
@@ -216,7 +216,7 @@ function debounce(func, wait, immediate) {
 }
 ```
 
-![functionReturn](./../../.vuepress/public/images/debounce&throttle/functionReturnSuccess.png)
+![functionReturn](./../../.vuepress/public/images/debounce/functionReturnSuccess.png)
 
 ## 取消防抖
 
