@@ -53,11 +53,11 @@ function getUserAction() {
   console.log(`这是第${count++}次调用这个事件了!`);
 };
 
-function debounce(func, waitTime) {
+function debounce(func, wait) {
   var timeout;
   return function() {
     clearTimeout(timeout) // 重新触发时重置定时器
-    timeout = setTimeout(func, waitTime);
+    timeout = setTimeout(func, wait);
   }
 }
 
@@ -98,7 +98,7 @@ console.log(obj.getNum()); // 1
 言归正传, 请出我们的借刀杀..哦不借物达人 [call / apply](../studyBasement/Call&Apply&Bind.md) 来将this指向变回 `<body>` 对象:
 
 ```js {5,9}
-function debounce(func, waitTime) {
+function debounce(func, wait) {
   var timeout;
   console.log(this)
   return function() {
@@ -107,7 +107,7 @@ function debounce(func, waitTime) {
     clearTimeout(timeout)
     timeout = setTimeout(function() {
       func.apply(self) // 用 call() 也一样
-    }, waitTime);
+    }, wait);
   }
 }
 ...
@@ -123,9 +123,9 @@ function getUserAction() {
 
 好了, 现在指向正确啦!
 
-## event undefined
+## event去哪儿了
 
-处理完了this, 我们再来检查一下加入防抖后的JavaScript事件自带的event对象是否正确:
+处理完了 `this` , 我们再来检查一下加入防抖后的JavaScript事件自带的 `event` 对象是否正确:
 
 ```js
 function getUserAction(e) {
@@ -155,7 +155,7 @@ function debounce(func, wait) {
 
 到目前为止, 还有个小问题, 那就是防抖函数必须要 '等' 到计时结束, 才会执行第一次, 如果间隔较短, 那用户还能忍, 但是防抖间隔较长, 就没那么好受了, 于是我们再来改造一下它, 让它可以立即执行并在停止 n 秒后才可以重新触发:
 
-```js {9-17}
+```js {9-16}
 function debounce(func, wait, immediate) {
 
   var timeout;
@@ -187,7 +187,7 @@ function debounce(func, wait, immediate) {
 
 ![functionReturn](./../../.vuepress/public/images/debounce&throttle/functionReturn.png)
 
-当 immediate 为 false 的时候，因为使用了 setTimeout ，我们将 func.apply(context, args) 的返回值赋给变量，最后再 return 的时候，值将会一直是 undefined，所以我们只在 immediate 为 true 的时候返回函数的执行结果。
+当 `immediate` 为 `false` 的时候，因为使用了 `setTimeout` ，我们将 `func.apply(context, args)` 的返回值赋给变量，最后再 `return` 的时候，值将会一直是 `undefined` ，所以我们只在 `immediate` 为 true 的时候返回函数的执行结果。
 
 ```js
 function debounce(func, wait, immediate) {
@@ -220,9 +220,9 @@ function debounce(func, wait, immediate) {
 
 ## 取消防抖
 
-最后一个问题了, 如果我想取消防抖该咋整呢 , 这也是一个很合理的需求, 那么我们开始吧 , 首先将
+最后一个问题了, 如果我想取消防抖该咋整呢 , 这也是一个很合理的需求, 那么我们开始吧 , 首先让 `debounce` 函数 `return` 一个变量 `debonced`, 并且给这个变量注册一个 `cancel` 方法。
 
-```js {5,23-26}
+```js {5,24-27}
 function debounce(func, wait, immediate) {
 
   var timeout, result;
