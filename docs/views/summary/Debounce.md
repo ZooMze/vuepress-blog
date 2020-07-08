@@ -1,6 +1,6 @@
 ---
-title: 防抖debounce
-date: 2020-07-08
+title: 防抖 Debounce
+date: 2020-07-07
 categories:
  - 备忘
  - 教程
@@ -12,7 +12,7 @@ tags:
 
 虽然前人栽的大树([lodash](https://www.lodashjs.com/)) , ([underscore](https://underscorejs.net/))已经足够乘凉了, 但是用归用, 这防抖的知识以及原理还是要掌握呀, 那么本文就来探讨下这个, 参考了掘金上一堆文章, 然后自己来总结下。
 
-还有一片 节流 throttle, 还在整理中...
+还有一篇 节流 throttle, coming soon...
 
 ## 为啥要做防抖
 
