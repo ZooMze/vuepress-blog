@@ -18,7 +18,7 @@ tags:
 ::: details 答案
 
 ```js
- [1, NaN, NaN]
+ [1, NaN, 7]
 ```
 
  实际上返回的结果是 [1, NaN, 7] ，因为 parseInt 函数只需要两个参数 parseInt(value, radix) ，而 map 的回调函数需要三个参数 callback(currentValue, index, array)。MDN文档中指明 parseInt 第二个参数是一个2到36之间的整数值，用于指定转换中采用的基数, 即进制。如果省略该参数或其值为0，则数字将以10为基础来解析。如果该参数小于2或者大于36，则 parseInt 返回 NaN。此外，转换失败也会返回 NaN。
