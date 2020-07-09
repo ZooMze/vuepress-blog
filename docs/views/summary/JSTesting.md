@@ -12,18 +12,18 @@ tags:
  写出以下代码的输出值, 并写出解答过程
 
 ```js
-  ["1", "11", "111"].map(parseInt)
+["1", "11", "111"].map(parseInt)
 ```
 
 ::: details 答案
 
 ```js
- [1, NaN, NaN]
+ [1, NaN, 7]
 ```
 
- 实际上返回的结果是 [1, NaN, NaN] ，因为 parseInt 函数只需要两个参数 parseInt(value, radix) ，而 map 的回调函数需要三个参数 callback(currentValue, index, array)。MDN文档中指明 parseInt 第二个参数是一个2到36之间的整数值，用于指定转换中采用的基数。如果省略该参数或其值为0，则数字将以10为基础来解析。如果该参数小于2或者大于36，则 parseInt 返回 NaN。此外，转换失败也会返回 NaN。
+ 实际上返回的结果是 [1, NaN, 7] ，因为 parseInt 函数只需要两个参数 parseInt(value, radix) ，而 map 的回调函数需要三个参数 callback(currentValue, index, array)。MDN文档中指明 parseInt 第二个参数是一个2到36之间的整数值，用于指定转换中采用的基数, 即进制。如果省略该参数或其值为0，则数字将以10为基础来解析。如果该参数小于2或者大于36，则 parseInt 返回 NaN。此外，转换失败也会返回 NaN。
 
-现在来分析问题。parseInt("1", 0) 的结果是当作十进制来解析，返回 1；parseInt("2", 1) 的第二个参数非法，返回 NaN；parseInt("3", 2) 在二进制中，"3" 是非法字符，转换失败，返回 NaN。
+现在来分析问题。parseInt("1", 0) 的结果是当作十进制来解析，返回 1；parseInt("11", 1) 的第二个参数非法，返回 NaN；parseInt("111", 2) 作为二进制转换，"111" 转换为 二进制是 7。
 :::
 
 ## 2. 神奇的null
@@ -31,13 +31,13 @@ tags:
 写出以下代码的输出值, 并写出解答过程
 
 ```js
-  [typeof null, null instanceof Object]
+[typeof null, null instanceof Object]
 ```
 
 ::: details 答案
 
 ```js
- ["object", false]
+["object", false]
 ```
 
 在MDN关于 null 的文档中也特别指出来了，typeof null 的结果是 "object"，它是ECMAScript的bug，其实应该是 "null"。但这个bug由来已久，在JavaScript中已经存在了将近二十年，也许永远不会修复，因为这牵扯到太多的Web系统，修复它会产生更多的bug，令许多系统无法正常工作。而 instanceof 运算符是用来测试一个对象在其原型链构造函数上是否具有 prototype 属性，null 值并不是以 Object 原型创建出来的，所以 null instanceof Object 返回 false。
@@ -48,17 +48,17 @@ tags:
 根据以下代码输出结果选择正确的答案, 并写出解答过程
 
 ```js
-  [ [3,2,1].reduce(Math.pow), [].reduce(Math.pow) ]
-  // A. an error
-  // B. [9, 0]
-  // C. [9, NaN]
-  // D. [9, undefined]
+[ [3,2,1].reduce(Math.pow), [].reduce(Math.pow) ]
+// A. an error
+// B. [9, 0]
+// C. [9, NaN]
+// D. [9, undefined]
 ```
 
 ::: details 答案
 
 ```js
- A
+A
 ```
 
 如果数组为空并且没有提供initialValue， 会抛出TypeError 。如果数组仅有一个元素（无论位置如何）并且没有提供initialValue， 或者有提供initialValue但是数组为空，那么此唯一值将被返回并且callback不会被执行。
@@ -69,18 +69,18 @@ tags:
 根据以下代码输出结果选择正确的答案, 并写出解答过程
 
 ```js
-  var val = 'smtg';
-  console.log('Result is ' + (val === 'smtg') ? 'AAA' : 'BBB');
-  // A. 'Result is AAA'
-  // B. 'Result is BBB'
-  // C. 'Result is'
-  // D. other...
+var val = 'smtg';
+console.log('Result is ' + (val === 'smtg') ? 'AAA' : 'BBB');
+// A. 'Result is AAA'
+// B. 'Result is BBB'
+// C. 'Result is'
+// D. other...
 ```
 
 ::: details 答案
 
 ```js
- ["object", false]
+["object", false]
 ```
 
 实际上输出 "Something"，因为 + 的优先级比条件运算符 condition ? val1 : val2 的优先级高。
@@ -91,16 +91,16 @@ tags:
 写出`flag`执行完下列代码的最终值, 并写出解答过程
 
 ```js
-  var flag = ''
-  var name = 'someone';
-  (function () {
-    if (typeof name === 'undefined') {
-      var name = 'another one';
-      flag = true;
-    } else {
-      flag = false;
-    }
-  })();
+var flag = ''
+var name = 'someone';
+(function() {
+  if (typeof name === 'undefined') {
+    var name = 'another one';
+    flag = true;
+  } else {
+    flag = false;
+  }
+})();
 ```
 
 ::: details 答案
@@ -119,11 +119,11 @@ true
 写出`ary`执行完下列代码的最终值, 并写出解答过程
 
 ```js
-  var ary = [0,1,2];
-  ary[10] = 10;
-  ary.filter(function(x) {
-    return x === undefined;
-  });
+var ary = [0,1,2];
+ary[10] = 10;
+ary.filter(function(x) {
+  return x === undefined;
+});
 ```
 
 ::: details 答案
@@ -140,22 +140,22 @@ filter 为数组中的每个元素调用一次 callback 函数，并利用所有
 写出下列代码的控制台输出结果, 并写出解答过程
 
 ```js
-  function showCase(value) {
-    switch(value) {
-      case 'A':
-      console.log('Case A');
-      break;
-      case 'B':
-      console.log('Case B');
-      break;
-      case undefined:
-      console.log('undefined');
-      break;
-      default:
-      console.log('default');
-    }
+function showCase(value) {
+  switch(value) {
+    case 'A':
+    console.log('Case A');
+    break;
+    case 'B':
+    console.log('Case B');
+    break;
+    case undefined:
+    console.log('undefined');
+    break;
+    default:
+    console.log('default');
   }
-  showCase(new String('A'));
+}
+showCase(new String('A'));
 ```
 
 ::: details 答案
@@ -173,16 +173,16 @@ typeof string("A") === "string" 的结果是 true
 根据以下代码输出结果选择正确的答案, 并写出解答过程
 
 ```js
-  var a = [0];
-  if ([0]) {
-    console.log(a == true);
-  } else {
-    console.log('oops');
-  }
-  // A. true
-  // B. false
-  // C. 'oops'
-  // D. other...
+var a = [0];
+if ([0]) {
+  console.log(a == true);
+} else {
+  console.log('oops');
+}
+// A. true
+// B. false
+// C. 'oops'
+// D. other...
 ```
 
 ::: details 答案
@@ -202,7 +202,7 @@ D
 写出下列代码的执行结果, 并写出解答过程
 
 ```js
-  {} == {}
+{} == {}
 ```
 
 ::: details 答案
@@ -219,7 +219,7 @@ ES5规范11.9.3.1-f指出：如果比较的两个对象指向的是同一个对�
 写出下列代码的执行结果, 并写出解答过程
 
 ```js
-  1 + - + + + - + 1
+1 + - + + + - + 1
 ```
 
 ::: details 答案
@@ -236,16 +236,16 @@ ES5规范11.9.3.1-f指出：如果比较的两个对象指向的是同一个对�
 根据以下代码输出结果选择正确的答案, 并写出解答过程
 
 ```js
-  var ary = Array(3);
-  ary[0] = 2;
-  ary.map(function(elem) {
-    return "1";
-  });
+var ary = Array(3);
+ary[0] = 2;
+ary.map(function(elem) {
+  return "1";
+});
 
-  // A. [2, 1, 1]
-  // B. ["1", "1", "1"]
-  // C. [2, "1", "1"]
-  // D. other...
+// A. [2, 1, 1]
+// B. ["1", "1", "1"]
+// C. [2, "1", "1"]
+// D. other...
 ```
 
 ::: details 答案
@@ -264,22 +264,22 @@ map 方法会给原数组中的每个元素都按顺序调用一次 callback 函
 根据以下代码输出结果选择正确的答案, 并写出解答过程
 
 ```js
-  function changeArray(ary) {
-    ary[1] = ary[0];
-  }
+function changeArray(ary) {
+  ary[1] = ary[0];
+}
 
-  function func(a, b, c) {
-    a = 10;
-    changeArray(arguments);
-    return a + b + c;
-  }
+function func(a, b, c) {
+  a = 10;
+  changeArray(arguments);
+  return a + b + c;
+}
 
-  func(1, 1, 1);
+func(1, 1, 1);
 
-  // A. 3
-  // B. 11
-  // C. 12
-  // D. other...
+// A. 3
+// B. 11
+// C. 12
+// D. other...
 ```
 
 ::: details 答案
@@ -297,7 +297,7 @@ D
 写出下列代码的执行结果, 并写出解答过程
 
 ```js
-  Number.MIN_VALUE > 0
+Number.MIN_VALUE > 0
 ```
 
 ::: details 答案
@@ -314,12 +314,12 @@ MIN_VALUE属性是 JavaScript 里最接近 0 的正值，而不是最小的负�
 根据以下代码输出结果选择正确的答案, 并写出解答过程
 
 ```js
-  [1 < 2 < 3, 3 < 2 < 1]
+[1 < 2 < 3, 3 < 2 < 1]
 
-  // A. [true, true]
-  // B. [true, false]
-  // C. [false, true]
-  // D. [false, false]
+// A. [true, true]
+// B. [true, false]
+// C. [false, true]
+// D. [false, false]
 ```
 
 ::: details 答案
@@ -336,7 +336,7 @@ A
 写出下列代码的执行结果, 并写出解答过程
 
 ```js
-  2 == [[[2]]]
+2 == [[[2]]]
 ```
 
 ::: details 答案
@@ -352,21 +352,23 @@ A
 
 ## 16. 小数点魔术
 
-写出下列代码的执行结果, 并写出解答过程
+以下三行代码每个分开独立执行, 没有干扰, 请以此说出代码的执行结果, 并写出解答过程
 
 ```js
-  console.log(6.toString())
-  console.log(666..toString())
-  console.log(666...toString())
+console.log(6.toString())
+
+console.log(666..toString())
+
+console.log(666...toString())
 ```
 
 ::: details 答案
 
 ```js
-error, "3", error
+error, "666", error
 ```
 
-点运算符会被优先识别为数字常量的一部分，然后才是对象属性访问符。所以 3.toString() 实际上被JS引擎解析成 (3.)toString()，显然会出现语法错误。但是如果你这么写 (3).toString()，人为加上括号，这就是合法的
+点运算符会被优先识别为数字常量的一部分，然后才是对象属性访问符。所以 6.toString() 实际上被JS引擎解析成 (6.)toString()，显然会出现语法错误。但是如果你这么写 (6).toString()，人为加上括号，这就是合法的
 :::
 
 ## 17. 自动提升为全局变量
@@ -374,16 +376,16 @@ error, "3", error
 根据以下代码输出结果选择正确的答案, 并写出解答过程
 
 ```js
-  (function() {
-    var x = y = 1;
-  })();
-  console.log(y);
-  console.log(x);
+(function() {
+  var x = y = 1;
+})();
+console.log(y);
+console.log(x);
 
-  // A. 1, 1
-  // B. error, error
-  // C. 1, error
-  // D. other...
+// A. 1, 1
+// B. error, error
+// C. 1, error
+// D. other...
 ```
 
 ::: details 答案
@@ -400,7 +402,7 @@ C
 写出下列代码的执行结果, 并写出解答过程
 
 ```js
-  "1 2 3".replace(/\d/g, parseInt);
+"1 2 3".replace(/\d/g, parseInt);
 ```
 
 ::: details 答案
@@ -417,14 +419,14 @@ C
 根据以下代码输出结果选择正确的答案, 并写出解答过程
 
 ```js
-  var a = new Date("2020-03-19");
-  var b = new Date(2020, 03, 19);
-  [a.getDay() == b.getDay(), a.getMonth() == b.getMonth()]
+var a = new Date("2020-03-19");
+var b = new Date(2020, 03, 19);
+[a.getDay() == b.getDay(), a.getMonth() == b.getMonth()]
 
-  // A. [true, true]
-  // B. [true, false]
-  // C. [false, true]
-  // D. [false, false]
+// A. [true, true]
+// B. [true, false]
+// C. [false, true]
+// D. [false, false]
 ```
 
 ::: details 答案
@@ -443,16 +445,16 @@ D
 根据以下代码输出结果选择正确的答案, 并写出解答过程
 
 ```js
-  if("http://giftwrapped.com/picture.jpg".match(".gif")) {
-    console.log("a gif file");
-  } else {
-    console.log("not a gif file");
-  }
+if("http://giftwrapped.com/picture.jpg".match(".gif")) {
+  console.log("a gif file");
+} else {
+  console.log("not a gif file");
+}
 
-  // A. "a gif file"
-  // B. "not a gif file"
-  // C. error
-  // D. other...
+// A. "a gif file"
+// B. "not a gif file"
+// C. error
+// D. other...
 ```
 
 ::: details 答案
