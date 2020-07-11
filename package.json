@@ -1,7 +1,7 @@
 {
-  "name": "my-blog",
-  "version": "1.0.0",
-  "author": "reco_luan",
+  "name": "vuepress-blog",
+  "version": "1.2.0",
+  "author": "ZooMze",
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"

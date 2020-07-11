@@ -98,11 +98,11 @@ TCP/IP 模型分为四层: 应用层, 传输层, IP层, 链路层。
 2. 妹子点头微笑并招手
 3. 你点头微笑
 
-### HTTP 请求
+## HTTP 请求
 
 握完手之后, TCP连接就建立好了, 接下来就是常用到的请求内容了, 浏览器的开发者工具就能捕获到这些内容, 例如 GET 请求等
 
-#### HTTPS
+### HTTPS
 
 HTTPS 中的 'S' 指 **SSL/TLS** 的鉴权/认证
 
@@ -111,17 +111,17 @@ HTTPS 中的 'S' 指 **SSL/TLS** 的鉴权/认证
 [SSL/TLS协议运行机制的概述](http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html)
 [图解SSL/TLS协议](http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html)
 
-### HTTP 响应
+## HTTP 响应
 
 服务器处理上述的请求完毕后, 开始执行响应动作, 返回所请求的内容或是JSON数据一类的都是在这个阶段内
 
-### 浏览器解析 & 页面渲染
+## 浏览器解析 & 页面渲染
 
 拿到了服务器返回的东西之后呢, 然后就是把这些东西呈现给用户了
 
 根据服务器返回的东西类型不同, 浏览器对应的解析也是有不同的, 这里以返回 HTML 页面为例进行说明(不考虑返回JSON或者XML)
 
-#### 渲染树 Render Tree
+### 渲染树 Render Tree
 
 浏览器渲染的过程其实是渲染 DOM 树和 CSSOM 树的融合, 两者的组合构成了浏览器的渲染树 Render Tree, 浏览器根据这些信息决定渲染谁和渲染再网页的哪个位置上, 例如 `display: none` 属性就会影响到对应节点的渲染。
 

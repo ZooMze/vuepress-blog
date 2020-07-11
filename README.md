@@ -7,8 +7,8 @@ A blog record everything...
 * :tada: **2020-6**: Recreated the this repository & Change theme with [vuepress-theme-reco](https://vuepress-theme-reco.recoluan.com/)
 * :bulb: **2020-2**: Restructure with [vuepress](https://www.vuepress.cn/)
 * :bulb: **2019-6**: Moved repository from Gitee to Github & let Gitee as a mirror
-* :bulb: **2018-11**: Changed writing mode to _.md_
-* :upside_down_face: **Earlier**: write with _.docx_
+* :bulb: **2018-11**: Changed writing mode to .md
+* :dizzy_face: **Earlier**: write with .docx
 
 ## Online Address
 

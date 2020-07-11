@@ -31,8 +31,6 @@ tags:
 
 注意: **基本数据类型是没有 `prototype` 属性的**, 但是可以通过 `__proto__` 属性让我们访问到其 **原型** 的 `prototype`
 
-![String](./../../.vuepress/public/images/originaljavaScript/string&String.png)
-
 ```js
 var F = function() {}
 
