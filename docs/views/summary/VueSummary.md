@@ -201,6 +201,20 @@ this.$set(listData, 2, { name: 'd', id: '4' });
 
 * 更详细的内容查看官方文档: [全局API:  $set](https://cn.vuejs.org/v2/api/#Vue-set)
 
+## Virtual DOM
+
+Virtual DOM 简单的说就是一颗树，一颗以javaScript对象（VNode）作为基础的树，用对象的属性来描述节点，因此这个对象至少包含标签名（tag）、属性（attrs）、和 子元素对象（chuildren）
+
+Virtual DOM 的最终目的是将虚拟的节点渲染到视图上，其实它主要做了两件事：(1)、提供与真实DOM节点对应的虚拟节点VNode；(2)、将虚拟节点VNode和旧虚拟节点(oldVNode)进行对比，然后更新视图；
+
+### 优势
+
+1. 具备跨平台的优势；
+
+2. 操作DOM慢，js运行的效率高；vue 将 DOM 对比放在js层，提高效率，Virtual DOM 本质上其实就是 js 和 dom 之间的一个缓存，通过 `patching` 算法计算出真正需要更新的节点，最大限度的减少DOM操作；
+
+3. 提升渲染的性能；dom操作的减少，可以避免更多的回流和重绘等，更加高效的提高性能
+
 ## vuex
 
 vuex 是 vue.js 中的状态管理, 它的出现是为了解决在多个组件之间复用和修改**同一属性**困难的问题

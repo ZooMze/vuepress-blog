@@ -9,16 +9,19 @@ tags:
 ---
 
 ## 前言
+
 在循环遍历数据时, 都需要一个变量来记录每一次迭代在数据集合中的位置, 迭代器就是遍历的另一种解决方案。
 
 **迭代器 (Iterator)** 和 **生成器 (Generator)** 是ES6添加的新内容, **迭代器的使用可以极大地简化数据操作** ; Set集合 与 Map集合 都依赖迭代器的实现,  迭代器的出现旨在消除多重循环时还需要追踪变量所产生的复杂度。
 
-Set 和 Map集合是 ES6提供的新数据结构, [点击这里](./Set&Map) 了解更多。
+Set集合 和 Map集合是 ES6提供的新数据结构, 本站这篇文章介绍了 [Set & Map](./Set&Map)。
 
 ## 迭代器 Iterator
+
 迭代器是一个特殊对象, 它具有其特有的接口吗所有的迭代器都有 `next()` 方法, 每次调用都会返回一个**结果对象**。
 
-**结果对象**有两个属性: 
+**结果对象**有两个属性:
+
 * `value` 表示下一个将要返回的值
 * `done` (Boolean) 当没有更多可返回的数据时返回 `true`
 
@@ -30,7 +33,7 @@ Set 和 Map集合是 ES6提供的新数据结构, [点击这里](./Set&Map) 了�
 
 用ES5的语法创建(~~仿造~~)一个迭代器:
 
-```js 
+```js
 // 迭代器
 function createIterator(items) {
   var i = 0;
@@ -76,6 +79,7 @@ console.log(iterator.next().value); // 1
 console.log(iterator.next().value); // 2
 console.log(iterator.next().value); // 3
 ```
+
 在这个示例中，`createlterator()` 前的星号表明它是一个生成器；`yield` 关键字也是ES6的新特性，可以通过它来指定调用迭代器的next()方法时的返回值及返回顺序。生成迭代器后，连续3次调用它的 `next()` 方法返回3个不同的值，分别是1、2和3。生成器的调用过程与其他函数一样，最终返回的是 **创建好的迭代器**。
 
 生成器函数最有趣的部分是，每当执行完一条 `yield;` 语句后函数就会 **自动停止** 执行。举个例子，在上面这段代码中，执行完语句 `yield 1;`之后，函数便不再执行其他任何语句，直到再次调用迭代器的 `next()` 方法才会继续执行 `yield 2;` 语句。生成器函数的这种中止函数执行的能力有很多有趣的应用。
@@ -103,6 +107,7 @@ console.log(iterator.next()); // "{ value: undefined, done: true }"
 
 ::: danger 警告
 `yield` 关键字只可在生成器内部使用，在其他地方使用会导致程序抛出错误
+
 ```js {3-4}
 function *createIterator(items) {
   items.forEach(function(item) {
@@ -111,6 +116,7 @@ function *createIterator(items) {
   });
 }
 ```
+
 从字面上看，`yield` 关键字确实在 `createlterator()` 函数内部，但是它与 `return` 关键字一样，二者都不能穿透 **函数边界**。嵌套函数中的 `return` 语句不能用作外部函数的返回语句，而此处嵌套函数中的 `yield` 语句会导致程序抛出语法错误
 :::
 
@@ -122,9 +128,9 @@ function *createIterator(items) {
 
 ```js
 let createIterator = function *(items) {
-    for (let i = 0; i < items.length; i++) {
-        yield items[i];
-    }
+  for (let i = 0; i < items.length; i++) {
+    yield items[i];
+  }
 };
 let iterator = createIterator([1, 2, 3]);
 console.log(iterator.next()); // "{ value: 1, done: false }"
@@ -134,6 +140,7 @@ console.log(iterator.next()); // "{ value: undefined, done: true }"
 // 之后的所有调用
 console.log(iterator.next()); // "{ value: undefined, done: true }"
 ```
+
 在这段代码中，`createlterator()` 是一个生成器函数表达式，而不是一个函数声明。由于函数表达式是匿名的，因此星号直接放在 `function` 关键字和小括号之间。此外，这个示例基本与前例相同，使用的也是 `for` 循环
 
 ::: danger 警告
@@ -158,6 +165,7 @@ let iterator = o.createIterator([1, 2, 3]);
 ### 状态切换器
 
 由于生成器的暂停机制, while并不会造成死循环, 它只在 `next()` 调用时进行激活迭代, 所以可以利用这一机制来完成状态切换:
+
 ```js
 let state = function*(){
   while(true){
@@ -168,6 +176,7 @@ let state = function*(){
 }
 
 let status = state();
+
 console.log(status.next().value);//'A'
 console.log(status.next().value);//'B'
 console.log(status.next().value);//'C'
@@ -182,13 +191,15 @@ console.log(status.next().value);//'B'
 迭代器是ES6的一个重要组成部分，在ES6中，已经默认为许多内建类型提供了内建迭代器，只有当这些内建迭代器无法实现目标时才需要自己创建。通常来说当定义自己的对象和类时才会遇到这种情况，否则，完全可以依靠内建的迭代器完成工作，而最常使用的可能是集合的那些迭代器
 
 在ES6中有3种类型的集合对象：数组、Map集合与Set集合
-为了更好地访问对象中的内容，这3种对象都内建了以下三种迭代器:
+为了更好地访问对象中的内容，这3种对象都**内建**了以下三种迭代器:
 
-* `entries()` 返回一个迭代器，其值为多个键值对
-* `values()` 返回一个迭代器，其值为集合的值
-* `keys()` 返回一个迭代器，其值为集合中的所有键名
+* `entries()` 返回一个迭代器，其值为多个 **键-值对**
+* `values()` 返回一个迭代器，其值为集合的 **值**
+* `keys()` 返回一个迭代器，其值为集合中的所有 **键**
 
-### entries()迭代器
+他们的用处都是拿来遍历的...
+
+### entries() 迭代器
 
 每次调用 `next()` 方法时，`entries()` 迭代器都会返回一个数组，数组中的两个元素分别表示集合中每个元素的键与值。如果被遍历的对象是数组，则第一个元素是数字类型的索引；如果是Set集合，则第一个元素与第二个元素都是值(Set集合中的值被同时作为键与值使用)；如果是Map集合，则第一个元素为键名
 
@@ -202,13 +213,13 @@ data.set("title", "Understanding ES6");
 data.set("format", "ebook");
 
 for (let entry of colors.entries()) {
-    console.log(entry);
+  console.log(entry);
 }
 for (let entry of tracking.entries()) {
-    console.log(entry);
+  console.log(entry);
 }
 for (let entry of data.entries()) {
-    console.log(entry);
+  console.log(entry);
 }
 ```
 
@@ -228,11 +239,11 @@ for (let entry of data.entries()) {
 ["format", "ebook"]
 ```
 
-### values()迭代器
+### values() 迭代器
 
 调用 `values()` 迭代器时会返回集合中所存的所有值
 
-```js 
+```js
 let colors = [ "red", "green", "blue" ];
 
 let tracking = new Set([1234, 5678, 9012]);
@@ -254,7 +265,7 @@ for (let value of data.values()) {
 
 输出如下:
 
-```
+```js
 "red"
 "green"
 "blue"
@@ -269,7 +280,7 @@ for (let value of data.values()) {
 
 如上所示，调用 `values()` 迭代器后，返回的是每个集合中包含的真正数据，而不包含数据在集合中的位置信息
 
-### keys()迭代器
+### keys() 迭代器
 
 `keys()` 迭代器会返回集合中存在的每一个键。如果遍历的是数组，则会返回数字类型的键，数组本身的其他属性不会被返回；如果是Set集合，由于键与值是相同的，因此 `keys()` 和 `values()` 返回的也是相同的迭代器；如果是Map集合，则 `keys()` 迭代器会返回每个独立的键
 
@@ -309,7 +320,5 @@ for (let key of data.keys()) {
 ```
 
 `keys()` 迭代器会获取 `colors` 、`tracking` 和`data` 这3个集合中的每一个键，而且分别在3个 `for-of` 循环内部将这些键名打印出来。对于数组对象来说，无论是否为数组添加命名属性，打印出来的都是数字类型的索引；而 `for-in` 循环迭代的是数组属性而不是数字类型的索引
-
-
 
 参考: [ES6中的迭代器(Iterator)和生成器(Generator)](https://www.cnblogs.com/xiaohuochai/p/7253466.html)
