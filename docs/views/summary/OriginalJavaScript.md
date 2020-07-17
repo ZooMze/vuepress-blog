@@ -204,3 +204,123 @@ console.log('11');
 ::: tip 小结
 JavaScript 是单线程的, 本质上是通过Event Loop这一机制来变相实现的多线程
 :::
+
+## for...of & for...in
+
+这两个循环都是用于遍历, 下面就来总结一下它们的异同
+
+### for...of
+
+先来看MDN对于 for...of 的定义:
+
+for...of语句在可迭代对象（包括 Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句
+
+```js
+let iterable = [10, 20, 30];
+
+for (let value of iterable) {
+  value += 1;
+  console.log(value);
+}
+// >> 11
+// >> 21
+// >> 31
+
+let iterable2 = "boo";
+
+for (let value of iterable2) {
+  console.log(value);
+}
+// >> "b"
+// >> "o"
+// >> "o"
+
+let iterable3 = new Map([["a", 1], ["b", 2], ["c", 3]]);
+
+for (let entry of iterable3) {
+  console.log(entry);
+}
+// >> ["a", 1]
+// >> ["b", 2]
+// >> ["c", 3]
+
+// 也可以对Map进行结构
+for (let [key, value] of iterable3) {
+  console.log(value);
+}
+// >> 1
+// >> 2
+// >> 3
+```
+
+### for...in
+
+...
+
+### 对比 和 注意项
+
+for...in 和 for...of 都是在迭代, 区别是两者的迭代方式
+
+* for...in 以任意顺序迭代对象的[可枚举属性](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Enumerability_and_ownership_of_properties)。
+* for...of 遍历[可迭代对象](../studyBasement/Iterator&Generator.md)定义要迭代的数据。
+
+```js
+Object.prototype.objCustom = function() {};
+Array.prototype.arrCustom = function() {};
+
+let iterable = [3, 5, 7];
+iterable.foo = 'hello';
+
+for (let i in iterable) {
+  console.log(i); // >> 0, 1, 2, "foo", "arrCustom", "objCustom"
+}
+
+for (let i of iterable) {
+  console.log(i); // >> 3, 5, 7
+}
+```
+
+::: warning 注意
+for...in不应该用于迭代一个 Array，其中索引顺序很重要。
+:::
+
+## 常用的判断数据类型
+
+### 对象
+
+```js
+Object.prototype.toString.apply({}) == '[object Object]' // true
+```
+
+::: 提示
+上述方法可以判断所有的数据类型, 甚至可以将其作为一个常用函数:
+
+```js
+var getType = Object.prototype.toString
+
+getType.call('aaaa')       // >> '[object String]'
+getType.call(2222)         // >> '[object Number]'
+getType.call(true)         // >> '[object Boolean]'
+getType.call(undefined)    // >> '[object Undefined]'
+getType.call(null)         // >> '[object Null]'
+getType.call({})           // >> '[object Object]'
+getType.call([])           // >> '[object Array]'
+getType.call(function(){}) // >> '[object Function]'
+```
+
+:::
+
+### 数组
+
+```js
+Array.isArray([]) // true
+[] instanceof Array // true
+```
+
+### 数字 / 字符串 / 布尔
+
+```js
+typeof(123)   // >> 'number'
+typeof('123') // >> 'string'
+typeof(true)  // >> 'boolean'
+```
