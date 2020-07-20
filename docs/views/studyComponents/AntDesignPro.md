@@ -64,7 +64,7 @@ Ant Design Pro 是一个企业级中后台前端/设计解决方案，秉承 Ant
 
 ### 安装
 
-```node
+```text
 yarn create umi
 // or
 npm create umi
@@ -74,7 +74,7 @@ npm create umi
 
 构建完成后安装依赖
 
-```node
+```text
 yarn
 // or
 npm install
@@ -82,6 +82,7 @@ npm install
 
 ### 目录结构
 
+```text
 ├── config                   # umi 配置，包含路由，构建等配置
 ├── mock                     # 本地模拟数据
 ├── public
@@ -101,10 +102,11 @@ npm install
 ├── tests                    # 测试工具
 ├── README.md
 └── package.json
+```
 
 然后运行:
 
-```node
+```text
 npm start
 ```
 
@@ -708,7 +710,7 @@ export default delay(proxy, 1000);
 
 当本地开发完毕之后，如果服务器的接口满足之前的约定，那么只需要关闭 mock 数据或者代理到服务端的真实接口地址即可。
 
-```node
+```text
 npm run start:no-mock
 ```
 

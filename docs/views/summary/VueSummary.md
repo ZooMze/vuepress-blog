@@ -393,14 +393,15 @@ computed: {
 
 刚刚讲完vuex, 新的问题又出来了, 多层组件之间传递同一个值一直是令人头疼的问题, 而且通常 **最内层** 组件内要期望可以访问到 **最外层** 向下流动的数据, 按照以往的模式, 要么直接一层一层的用props来传, 要么借用老大哥vuex, 这两个明显都不是最好的解决方案: 一个代码不够优雅一个无法完全组件化还得依赖vuex, 下面就介绍最佳解决方案: Provide & Inject。
 
-先定义一个父组件 `Parent.vue`:
+先定义一个父组件 `Parent.vue`, 并嵌套一个子组件 `Son.vue`:
 
 ```js
 <template>
   <div>
     I'm Parent, I have value:  {{ testValue }}
-    <button @click="changeTest">Change value in parent</button>
-    <son value="testValue"/>
+    <button @click="changeTest"> Change value in Parent.vue </button>
+    <!-- 注意这里没有传递参数 -->
+    <son/>
   </div>
 </template>
 
@@ -428,7 +429,7 @@ computed: {
 </script>
 ```
 
-然后再来个子组件 `Son.vue`
+然后再写一下子组件 `Son.vue`
 
 ```js
 <template>

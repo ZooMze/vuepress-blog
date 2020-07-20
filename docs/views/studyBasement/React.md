@@ -15,10 +15,12 @@ desc: 本md文档使用了vuepress扩展, 移植时需要注意格式
 ## 快速开始
 
 ### 通过标签引入
+
 可以将下载好的react文件通过标签直接引入
 `<script src="url"></script>`
 
 ### 工具链
+
 React团队推荐的工具链
 
 * 如果你是在学习 React 或创建一个新的单页应用，请使用 [Create React App](https://react.docschina.org/docs/create-a-new-react-app.html#create-react-app)。
@@ -26,14 +28,15 @@ React团队推荐的工具链
 * 如果你是在构建面向内容的静态网站，试试 [Gatsby](https://react.docschina.org/docs/create-a-new-react-app.html#gatsby)。
 * 结合实际开发需要, 当然有直接集成好的脚手架会是更好的选择, 如 [Ant Design Pro](https://pro.ant.design/index-cn)。
 
-
 ### Create React App
+
 由于是从头学习 React, 本文推荐 Create React App 此工具链, 从头开始搭建一个新的单页应用, 理解React的基本内容。
 
 使用前请确保本机Node >= 8.10 && npm >= 5.6
 
 确认完成后 依次执行
-``` 
+
+```text
 npm install create-react-app -g
 
 npx create-react-app my-app
@@ -45,7 +48,8 @@ npm start
 ```
 
 进入文件目录, 可以查看自动生成的文件目录
-```
+
+```text
 my-app
 ├── README.md
 ├── node_modules
@@ -66,6 +70,7 @@ my-app
 ```
 
 至此一个极简的React应用就搭建好了, 你可以在后续的文档学习中实践, 想要了解更多点击这里 [Create React App 中文文档](https://www.html.cn/create-react-app/)。
+
 ## JSX
 
 ```jsx
@@ -86,7 +91,9 @@ ReactDOM.render(
 
 大括号内放置任何有效的 JavaScript 表达式, 类似于Vue中的双大括号。
 
-**JSX 也是一个表达式**
+::: tip 注意
+__JSX 也是一个表达式__
+:::
 
 可以在 if 语句和 for 循环的代码块中使用 JSX，将 JSX 赋值给变量，把 JSX 当作参数传入，以及从函数中返回 JSX
 
@@ -100,6 +107,7 @@ function getGreeting(user) {
 ```
 
 **Babel 会把 JSX 转译成一个名为 `React.createElement()` 函数调用。**
+
 ```jsx
 const element = (
   <h1 className="greeting">
@@ -136,6 +144,7 @@ function tick() {
 
 setInterval(tick, 1000);
 ```
+
 上例为一个简单计时器, 但 **React 只更新它需要更新的部分**, 在 `state` 的章节会对此进行优化
 
 ## 组件 & Props
@@ -147,7 +156,6 @@ setInterval(tick, 1000);
 :::
 
 这个参数可以是简单的基本数据类型, 也可以是复杂对象 和 函数。
-
 
 ```jsx
 // 这两个组件在现在看来完全等效, 但其延伸方向有稍微有区别, 将在下一小节详细说明
@@ -163,6 +171,7 @@ class Welcome extends React.Component {
 ```
 
 ### class组件
+
 最常见的组件, 类似Vue中的组件, 持有state状态管理, 继承了 `React.component` 。
 此时在组件内 `this` 指向当前组件本身
 
@@ -190,6 +199,7 @@ class Welcome extends React.Component {
 :::
 
 ### 函数组件
+
 不同于普通的组件, 虽然同样可以输出 `ReactDOM`, 但其没有自身的state, 仅能从父组件处获取 `props` 的值, 可以理解为被父组件控制。
 
 函数组件的具有 数据统一, 单向数据流, 直观等优点; 事实上, 可以尽量多的使用函数组件来代替class组件, 这可以极大的减少不必要的代码量和理解难度。
@@ -197,6 +207,7 @@ class Welcome extends React.Component {
 ### 组合组件
 
 组件可以在自身内部引用别的组件，也可以任意嵌套, 在JSX中可以直接使用想要的组件
+
 ```jsx {8}
 // 这里使用了函数组件, 函数组件非常适合作为子组件
 function Child(props) {
@@ -234,6 +245,7 @@ React 非常灵活, 但有一条严格的规则:
 State和props类似, state可完全自定义, 并且完全受控于当前组件。
 
 先将之前的例子从函数组件变为class组件:
+
 ```jsx
 class Clock extends React.Component {
   render() {
@@ -357,7 +369,6 @@ this.setState((state, props) => ({
 
 **React 元素的事件处理和 DOM 元素的很相似，但是有一点语法上的不同：**
 
-
 * React 事件的命名采用小驼峰式（camelCase），而不是纯小写。
 * 使用 JSX 语法时你需要传入一个函数作为事件处理函数，而不是一个字符串。
 
@@ -376,6 +387,7 @@ this.setState((state, props) => ({
 ### 事件基础
 
 当你创建了一个class组件时, 通常事件处理函数应直接定义为class内的方法
+
 ```jsx
 class Toggle extends React.Component {
   constructor(props) {
@@ -462,6 +474,7 @@ class LoggingButton extends React.Component {
   }
 }
 ```
+
 :::
 
 同时由于组件化的模式, 在函数中 `return false` 无法阻止默认行为;
@@ -536,7 +549,7 @@ class LoginControl extends React.Component {
       <div>
         <Greeting isLoggedIn={isLoggedIn} />
         // 用表达式包裹的JSX
-        {button} 
+        { button }
       </div>
     );
   }
@@ -547,9 +560,11 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
+
 上述条件判断方法是最基本的实现方式, 下面将介绍两种内联的条件渲染的方法, 类似Vue的指令式渲染。
 
-### 与运算符 &&
+### && 与运算符
+
 同时利用 JSX 和 逻辑运算符&& 的特性
 
 ```jsx
@@ -574,16 +589,18 @@ ReactDOM.render(
 );
 ```
 
-JSX对于运算符来说始终为true,:
+JSX对于运算符来说始终为true:
+
 ```jsx
 true && expression  // true
 false && expression // false
 ```
 
-### 三目运算符 ? :
+### ? 三目运算符
 
 基于前面的 && 运算符逻辑, 你可能会立即联想到同样有条件判断特性的三目运算符:
 以下是一个简单的代码片段
+
 ```jsx
 render() {
   const isLoggedIn = this.state.isLoggedIn;
@@ -718,6 +735,7 @@ const listItems = numbers.map((number) =>
   <input type="submit" value="提交" />
 </form>
 ```
+
 这是一个简单的表单, 他只接受了一个 `name`, 内容在其内部维护。
 
 ### 受控组件
@@ -769,9 +787,11 @@ class NameForm extends React.Component {
 
 ::: warning 注意
   你可以将数组传递到 value 属性中，以支持在 select 标签中选择多个选项：
-  ```jsx
-    <select multiple={true} value={['B', 'C']}>
-  ```
+
+```jsx
+  <select multiple={true} value={['B', 'C']}>
+```
+
 :::
 
 ### 文件 input 标签
@@ -791,6 +811,7 @@ setTimeout(function() {
   ReactDOM.render(<input value={null} />, mountNode);
 }, 1000);
 ```
+
 上述组件最开始无法修改, 延迟结束后变为可修改。
 
 ## 状态提升
@@ -800,7 +821,9 @@ setTimeout(function() {
 在本节中, 将通过一个实例: '计算水在用户输入的温度下是否会沸腾的温度计算器' 来进行逐一讲解。
 
 ### 基础功能
+
 首先创建一个判断是否煮沸的函数组件: `BoilingVerdict`, 它接受一个摄氏度 `celsius` 作为 `prop`, 并以此作为条件判断是否煮沸。
+
 ```jsx
 function BoilingVerdict(props) {
   if (props.celsius >= 100) {
@@ -926,7 +949,7 @@ function tryConvert(temperature, convertFunction) {
 }
 ```
 
-### 状态提升
+### 将状态提升
 
 现在的问题是, 两个输入框各干各的, 此外由于温度的数据都位于 `TemperatureInput` 中, 我们并不能在 `Calculator` 中进行计算。
 
@@ -945,11 +968,11 @@ function tryConvert(temperature, convertFunction) {
 当 `TemperatureInput` 组件想要向上更新温度数据时, 只需要调用 `this.props.onTemperatureChange()`
 
 ```jsx
- handleChange(e) {
-    // Before: this.setState({temperature: e.target.value});
-    this.props.onTemperatureChange(e.target.value);
-    // ...
- }
+handleChange(e) {
+  // Before: this.setState({temperature: e.target.value});
+  this.props.onTemperatureChange(e.target.value);
+  // ...
+}
 ```
 
 ::: warning 注意
@@ -977,7 +1000,7 @@ class TemperatureInput extends React.Component {
     return (
       <fieldset>
         <legend>输入的{scaleNames[scale]}为:</legend>
-        <input 
+        <input
           value={temperature}
           onChange={this.handleChange} />
       </fieldset>
@@ -1072,7 +1095,6 @@ class Calculator extends React.Component {
 * React 调用 `BoilingVerdict` 组件的 `render` 方法，并将摄氏温度值以组件 `props` 方式传入。
 
 * React DOM 根据输入值匹配水是否沸腾，并将结果更新至 DOM。我们刚刚编辑的输入框接收其当前值，另一个输入框内容更新为转换后的温度值。
-
 
 ## 组合与继承
 
