@@ -64,7 +64,7 @@ Ant Design Pro 是一个企业级中后台前端/设计解决方案，秉承 Ant
 
 ### 安装
 
-```
+```node
 yarn create umi
 // or
 npm create umi
@@ -74,16 +74,14 @@ npm create umi
 
 构建完成后安装依赖
 
-```
+```node
 yarn
 // or
 npm install
 ```
 
-
 ### 目录结构
 
-```
 ├── config                   # umi 配置，包含路由，构建等配置
 ├── mock                     # 本地模拟数据
 ├── public
@@ -103,12 +101,11 @@ npm install
 ├── tests                    # 测试工具
 ├── README.md
 └── package.json
-```
 
 然后运行:
 
-```
-npm start 
+```node
+npm start
 ```
 
 ## 基础开发
@@ -137,7 +134,7 @@ routes: [
             name: 'analysis',
             component: './Dashboard/Analysis'
           },
-          { 
+          {
             path: '/dashboard/monitor',
             name: 'monitor',
             component: './Dashboard/Monitor'
@@ -161,7 +158,7 @@ routes: [
   name: 'dashboard', // 当前路由在菜单和面包屑的名称
   icon: 'dashboard', // 图标
   hideInMenu: true, // 当前路由在菜单中隐藏, default = false
-  hideChildrenInMenu: true, // 隐藏子路由, default = false 
+  hideChildrenInMenu: true, // 隐藏子路由, default = false
   hideInBreadcrumb: true, // 当前路由在面包屑中隐藏, default = false
   authority: ['admin'], // 权限信息, 没有设置则当前路由不受权限控制
 }
@@ -171,7 +168,7 @@ routes: [
 
 在 `src/layouts/BasicLayout.jsx` 中修改 `menuDataRender`，并在代码中发起 `http` 请求，只需服务器返回下面格式的 `json` 即可。
 
-```jsx 
+```jsx
 const [menuData, setMenuData] = useState([]);
 
 useEffect(() => {
@@ -243,7 +240,8 @@ return (
 我们先创建源文件, 在 `src / pages` 下创建新的 js，less 文件。 如果有多个相关页面，您可以创建一个新文件夹来放置相关文件。
 
 现在我们在`src / pages` 创建一个文件夹 `newFolder`, 并向其内添加我们的新页面。
-``` {5-6}
+
+```js {5-6}
 config
 src
   models
@@ -257,6 +255,7 @@ package.json
 ```
 
 先给 `NewPage.js` 中安排上最low的 `render`
+
 ```jsx
 import React from 'react';
 
@@ -343,12 +342,15 @@ import router from 'umi/router';
 
 router.push('/dashboard/anyParams');
 ```
-或者: 
-```
+
+或者:
+
+```js
 import Link from 'umi/link';
 
 <Link to="/dashboard/anyParams">go</Link>;
 ```
+
 在路由组件中，可以通过 `this.props.match.params` 来获得路由参数。
 
 更多内容: [umi#路由](https://umijs.org/guide/router.html#%E7%BA%A6%E5%AE%9A%E5%BC%8F%E8%B7%AF%E7%94%B1)
@@ -357,7 +359,7 @@ import Link from 'umi/link';
 
 受限于umi脚手架, 在 `config.js` 中是不能直接使用React组件的, Pro 中暂时支持使用 ant.design 本身的 icon type，和传入一个 img 的 url。只需要直接在 icon 属性上配置即可，如果是个 url，Pro 会自动处理为一个 img 标签。
 
-::: tip
+::: tip 提示
 如果你想使用 iconfont 的图标，你可以使用 [ant.design](https://ant.design/components/icon-cn/#%E8%87%AA%E5%AE%9A%E4%B9%25) 的自定义图标.
 :::
 
@@ -371,9 +373,9 @@ import Link from 'umi/link';
 
 抽离组件是开发中会经常需要处理的问题, 如果一个功能具有一定的复用性和复用必要, 或者满足如下的描述, 建议将其抽象为组件:
 
-* 负责的是相对**独立**且**稳定**的功能
-* 无需单独配置路由
-* 可能是纯静态, 也可能有自己的state, 亦或由完全由父组件驱动
+- 负责的是相对**独立**且**稳定**的功能
+- 无需单独配置路由
+- 可能是纯静态, 也可能有自己的state, 亦或由完全由父组件驱动
 
 下面以一个图片展示组件为例, 该组件包含了图片和描述基本内容, 以及内外边距等内容
 
@@ -435,10 +437,10 @@ export default () => (
 
 样式在开发过程中, 仍有几点比较明显的痛点:
 
-* **全局污染**
-  css的选择器是全局生效, 不同于vue中的scope, react中则是根据build的先后顺序决定那些生效与否
-* **复杂选择器**
-  通常为了避免污染, 书写样式时通常会进行选择器嵌套, 以确保样式仅在需要的作用域内生效, 这就导致选择器越写越长, 深度也越写越深
+**全局污染**
+css的选择器是全局生效, 不同于vue中的scope, react中则是根据build的先后顺序决定那些生效与否
+**复杂选择器**
+通常为了避免污染, 书写样式时通常会进行选择器嵌套, 以确保样式仅在需要的作用域内生效, 这就导致选择器越写越长, 深度也越写越深
 
 为了解决以上两点, 脚手架采取了 **CSS Modules** 模块化方案:
 
@@ -474,8 +476,8 @@ export default ({ title }) => <div className={styles.title}>{title}</div>;
   margin-bottom: 16px;
 }
 
-/* 
-也可以写出隐藏的关键字local 
+/*
+也可以写出隐藏的关键字local
 :local(.title) {
   color: @heading-color;
   font-weight: 600;
@@ -499,7 +501,6 @@ export default ({ title }) => <div className={styles.title}>{title}</div>;
 }
 ```
 
-
 CSS Modules 的基本原理很简单，就是对每个类名（非 `:global` 声明的）按照一定规则进行转换，保证它的唯一性。如果在浏览器里查看这个示例的 DOM 结构，你会发现实际渲染出来是这样的：
 
 ```html
@@ -508,8 +509,9 @@ CSS Modules 的基本原理很简单，就是对每个类名（非 `:global` 声
 ```
 
 ::: tip 建议
-  * CSS Modules 只会对 `className` 和 `id` 进行转换, 其他选择器 **均不进行处理**, 推荐使用 `className`。
-  * 你的类名可以在保证语义化的前提下尽量简单。
+CSS Modules 只会对 `className` 和 `id` 进行转换, 其他选择器 **均不进行处理**, 推荐使用 `className`。
+
+你的类名可以在保证语义化的前提下尽量简单。
 :::
 
 ### 覆盖组件样式
@@ -552,12 +554,11 @@ ReactDOM.render(
 }
 ```
 
-
 这里提供了CSS Modules 的源码和拓展阅读:
 
-* [github/css-modules](https://github.com/css-modules/css-modules)
-* [CSS Modules 用法教程 By 阮一峰](https://www.ruanyifeng.com/blog/2016/06/css_modules.html)
-* [CSS Modules 详解及 React 中实践](https://github.com/camsong/blog/issues/5) __← 推荐阅读这个__
+[github/css-modules](https://github.com/css-modules/css-modules)
+[CSS Modules 用法教程 By 阮一峰](https://www.ruanyifeng.com/blog/2016/06/css_modules.html)
+[CSS Modules 详解及 React 中实践](https://github.com/camsong/blog/issues/5) __← 推荐阅读这个__
 
 ## 数据交互
 
@@ -575,15 +576,13 @@ Ant Design Pro 可通过API和任何技术栈的服务端一起工作。这里�
 
 为了方便统一维护, 统一的请求处理都放在 **service** 文件夹中, 并按照 model 纬度进行拆分文件, 例如在 src\service 文件夹下的缺省文件:
 
-```
 service
 ├── login.js
 └── user.js
-```
 
-::: tip
-  utils/request.js 是基于 fetch 的封装, 用于统一处理POST, GET等请求参数、请求头以及错误处理等内容。
-  具体可以在源码中查看。
+::: tip 提示
+utils/request.js 是基于 fetch 的封装, 用于统一处理POST, GET等请求参数、请求头以及错误处理等内容。
+具体可以在源码中查看。
 :::
 
 那么, 现在我们来创建数据流所需的 model 和 service
@@ -646,6 +645,7 @@ effects: {
   },
 },
 ```
+
 也可以看这里的关于 [dva async Logic](https://github.com/dvajs/dva/blob/master/docs/GettingStarted.md#async-logic) 描述
 
 ## Mock 和联调
@@ -677,7 +677,7 @@ export default {
 
 ### 模拟延迟
 
-可以直接在上述回调方法中添加 `setTimeout` 即可实现延迟, 但是如果需要全局添加延迟就是非常不必要且重复的工作了, 我们可以使用第三方插件 [roadhog](https://github.com/sorrycc/roadhog) 来完成这个工作: 
+可以直接在上述回调方法中添加 `setTimeout` 即可实现延迟, 但是如果需要全局添加延迟就是非常不必要且重复的工作了, 我们可以使用第三方插件 [roadhog](https://github.com/sorrycc/roadhog) 来完成这个工作:
 
 ```js
 // some mock.js
@@ -708,8 +708,8 @@ export default delay(proxy, 1000);
 
 当本地开发完毕之后，如果服务器的接口满足之前的约定，那么只需要关闭 mock 数据或者代理到服务端的真实接口地址即可。
 
-```
-$ npm run start:no-mock
+```node
+npm run start:no-mock
 ```
 
 本文档由 [Ant Design Pro](https://pro.ant.design/docs/getting-started-cn) 提炼而来。 

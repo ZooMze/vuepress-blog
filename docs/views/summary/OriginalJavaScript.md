@@ -211,20 +211,19 @@ JavaScript 是单线程的, 本质上是通过Event Loop这一机制来变相实
 
 ### for...of
 
-先来看MDN对于 for...of 的定义:
+先来看MDN对于 `for...of` 的定义:
 
-for...of语句在可迭代对象（包括 Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句
+`for...of` 语句在 **可迭代对象**（包括 `Array`，`Map`，`Set`，`String`，`TypedArray`，`arguments` 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句
 
 ```js
 let iterable = [10, 20, 30];
 
 for (let value of iterable) {
-  value += 1;
   console.log(value);
 }
-// >> 11
-// >> 21
-// >> 31
+// >> 10
+// >> 20
+// >> 30
 
 let iterable2 = "boo";
 
@@ -253,16 +252,81 @@ for (let [key, value] of iterable3) {
 // >> 3
 ```
 
+::: warning 注意
+`for...of`对普通对象不管用哦~
+
+```js
+var aa = {a: 1, b: {bb :1}}
+for(let i of aa) {
+  console.log(i)
+}
+// Uncaught TypeError: aa is not iterable
+```
+
+:::
+
 ### for...in
 
-...
+`for...in` 则可以遍历对象的所有的 **可枚举属性**, 普通对象内就是枚举属性:
 
-### 对比 和 注意项
+```js
+var aa = {a: 1, b: {bb :1}}
+for(let i of aa) {
+  console.log(i)
+}
+```
 
-for...in 和 for...of 都是在迭代, 区别是两者的迭代方式
+`for...in` 厉害的地方在于, 它能遍历对象本身以及其原型链上的所有 **可枚举属性**:
 
-* for...in 以任意顺序迭代对象的[可枚举属性](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Enumerability_and_ownership_of_properties)。
-* for...of 遍历[可迭代对象](../studyBasement/Iterator&Generator.md)定义要迭代的数据。
+```js
+var newFunc = new Function(() => {return a})
+newFunc.b = 'newB'
+
+Function.prototype.a = 'newA'
+for(let i in newFunc) {
+  console.log(i)
+}
+
+// >> b
+// >> a
+```
+
+::: warning 别给数组套 `for...in`
+谨慎对数组使用`for...in`, 由于它能遍历到原型链, 通常情况我们是不关心其原型链而是只关心数组本身, 这就会导致会输出一些无关的内容而影响实际开发。
+
+```js
+var myArray = [1,2,4,5,6,7]
+myArray.name = "newName"
+
+for (var value in myArray) {
+  console.log(value)
+}
+// >> 0
+// >> 1
+// >> 2
+// >> 3
+// >> 4
+// >> 5
+// >> name
+```
+
+:::
+
+当然, 如果你想过滤掉遍历原型链这一特性, 也可以直接用 `hasOwnProperty()` 进行判断即可
+
+### 总结异同
+
+`for...in` 和 `for...of` 都是在迭代, 区别是两者的迭代方式
+
+* `for...in` 以任意顺序迭代对象的 __[可枚举属性](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Enumerability_and_ownership_of_properties)__。
+* `for...of` 遍历 __[可迭代对象](../studyBasement/Iterator&Generator.md)__ 定义要迭代的数据。
+
+::: tip 记忆点
+`for...in` 遍历的是 **键名** (ENU & IN-KEY: 谐音 in case)
+`for...of` 遍历的是 **值** (ITE & OF-VALUE)
+
+普通对象不可迭代, 但可枚举!
+:::
 
 ```js
 Object.prototype.objCustom = function() {};
@@ -280,10 +344,6 @@ for (let i of iterable) {
 }
 ```
 
-::: warning 注意
-for...in不应该用于迭代一个 Array，其中索引顺序很重要。
-:::
-
 ## 常用的判断数据类型
 
 ### 对象
@@ -292,7 +352,7 @@ for...in不应该用于迭代一个 Array，其中索引顺序很重要。
 Object.prototype.toString.apply({}) == '[object Object]' // true
 ```
 
-::: 提示
+::: tip 提示
 上述方法可以判断所有的数据类型, 甚至可以将其作为一个常用函数:
 
 ```js
