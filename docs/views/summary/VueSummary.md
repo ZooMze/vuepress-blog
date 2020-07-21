@@ -428,18 +428,42 @@ computed: {
 </script>
 ```
 
-然后再来个子组件 `Son.vue`
+然后再来个子组件 `Son.vue`, 这里没有接收任何参数, 也不向下传递任何参数
 
 ```js
 <template>
   <div>
-    I'm Child, I extends value : {{ value }}
+    I'm Son.
+    <grand-son/>
+  </div>
+</template>
+
+<script>
+  import grandSon from './grandSon'
+  export default {
+    name: 'son',
+    components: { grandSon },
+    data() {
+      return {
+        title: 'son'
+      }
+    }
+  }
+</script>
+```
+
+最后再来个孙组件 `GrandSon.vue`
+
+```js
+<template>
+  <div>
+    I'm GrandSon, I extends value : {{ value }} from Parent.
   </div>
 </template>
 
 <script>
   export default {
-    name: 'son',
+    name: 'grandSon',
     inject: ['injectValue'], // 在inject内接收
     mounted() {
       console.log(this.injectValue)
@@ -447,3 +471,82 @@ computed: {
   }
 </script>
 ```
+
+这就是依赖注入的最基础的应用。
+
+更多内容查看官方文档: [Vue: provide / inject](https://cn.vuejs.org/v2/api/#provide-inject)
+
+## 自定义指令
+
+提到指令, vue自身就有很多指令, 什么v-model、v-for、 v-if, 天天用天天见, 本节就介绍一下如何创建一个自定义的指令
+
+自定义指令有两种注册方法:
+
+* 全局注册
+* 组件内注册
+
+```js
+// 注册一个 *全局* 自定义指令 `v-focus`
+Vue.directive('focus', {
+  // 当被绑定的元素插入到 DOM 中时……
+  inserted: function (el) {
+    // 聚焦元素
+    el.focus()
+  }
+})
+```
+
+```js
+// *组件内* 通过directives选项注册
+directives: {
+  focus: { // 这里是名字
+    // 指令的定义
+    inserted: function (el) {
+      el.focus()
+    }
+  }
+}
+```
+
+注册完毕后, 则直接在元素上使用, 现在这个input在页面加载完成后将自动聚焦
+
+```js
+<input v-focus>
+```
+
+### 钩子函数
+
+一个自定义指令对象会提供总共五个钩子函数:
+
+* `bind`: 只调用一次, 第一次绑定到元素时调用, 类似于mounted
+* `inserted`: 被绑定元素插入父节点时调用
+* `update`: 组件更新VNode时调用, 通常情况下需要自行比较`VNode` 和 `OldVNode`
+* `componentUpdated`: 在VNode以及子VNode全部更新后调用
+* `unbind`: 只调用一次, 指令与解绑时调用, 类似于destroy
+
+#### 钩子函数的参数
+
+每个钩子函数都有同样的参数, 他们分别是:
+
+* `el`
+* `binding`
+* `vnode`
+* `oldVnode`
+
+
+更全的内容在这里 [Vue: 钩子函数的参数](https://cn.vuejs.org/v2/guide/custom-directive.html#%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0)
+
+本篇只提一下这个 `binding` 参数:
+
+...
+
+#### 动态指令参数
+
+自定义指令更加实际化的应用模式, 就是在指令后加参数, 它的基本语法是这样的
+
+`v-directive:[argument]="value"`
+
+参数有两种方式进行传递:
+
+* 通过argument进行传递, 这会出现在`binding.arg`
+* 通过value传递, 这会出现在 `binding.value`
