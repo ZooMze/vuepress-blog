@@ -544,9 +544,9 @@ directives: {
 
 自定义指令更加实际化的应用模式, 就是在指令后加参数, 它的基本语法是这样的
 
-`v-directive:[argument]="value"`
+`v-directive:[arg]="value"`
 
 参数有两种方式进行传递:
 
-* 通过argument进行传递, 这会出现在`binding.arg`
-* 通过value传递, 这会出现在 `binding.value`
+* 通过 `arg` 进行传递, 这会出现在`binding.arg`
+* 通过 `value` 传递, 这会出现在 `binding.value`
