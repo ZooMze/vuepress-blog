@@ -279,7 +279,9 @@ for(let i of aa) {
 `for...in` 厉害的地方在于, 它能遍历对象本身以及其原型链上的所有 **可枚举属性**:
 
 ```js
-var newFunc = new Function(() => {return a})
+var newFunc = new Function(() => {
+  return a
+})
 newFunc.b = 'newB'
 
 Function.prototype.a = 'newA'
@@ -352,8 +354,7 @@ for (let i of iterable) {
 Object.prototype.toString.apply({}) == '[object Object]' // true
 ```
 
-::: tip 提示
-上述方法可以判断所有的数据类型, 甚至可以将其作为一个常用函数:
+除了用于判断是否为对象, 上述方法可以判断所有的数据类型, 甚至可以将其作为一个常用函数:
 
 ```js
 var getType = Object.prototype.toString
@@ -366,8 +367,21 @@ getType.call(null)         // >> '[object Null]'
 getType.call({})           // >> '[object Object]'
 getType.call([])           // >> '[object Array]'
 getType.call(function(){}) // >> '[object Function]'
+getType.call(Object) // >> '[object Function]'
 ```
 
+::: tip 扩展
+当然还有很多不怎么常用的类型一样的可以用这个方法进行判断:
+
+|数据类型|返回值|
+|:-|:-|
+日期|'[object Date]'
+正则|'[object RegExp]'
+Map集合|'[object Map]'
+Set集合|'[object Set]'
+DOM|'[object HTMLDivElement]'
+函数的参数|'[object arguments]'
+window|'[object Window]'
 :::
 
 ### 数组

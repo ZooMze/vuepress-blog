@@ -452,7 +452,7 @@ computed: {
 </script>
 ```
 
-最后再来个孙组件 `GrandSon.vue`
+最后再来个孙组件 `GrandSon.vue`, 在孙组件直接获取 `Parent` 组件所提供的值
 
 ```js
 <template>
@@ -486,7 +486,8 @@ computed: {
 * 组件内注册
 
 ```js
-// 注册一个 *全局* 自定义指令 `v-focus`
+// 全局注册
+// 注册一个 `v-focus` 指令
 Vue.directive('focus', {
   // 当被绑定的元素插入到 DOM 中时……
   inserted: function (el) {
@@ -497,7 +498,8 @@ Vue.directive('focus', {
 ```
 
 ```js
-// *组件内* 通过directives选项注册
+// 组件内注册
+// 通过directives选项注册
 directives: {
   focus: { // 这里是名字
     // 指令的定义
@@ -516,7 +518,7 @@ directives: {
 
 ### 钩子函数
 
-一个自定义指令对象会提供总共五个钩子函数:
+一个自定义指令对象会提供总共五个钩子函数(它们都是可选的):
 
 * `bind`: 只调用一次, 第一次绑定到元素时调用, 类似于mounted
 * `inserted`: 被绑定元素插入父节点时调用
@@ -526,27 +528,26 @@ directives: {
 
 #### 钩子函数的参数
 
-每个钩子函数都有同样的参数, 他们分别是:
+每个钩子函数都有同样的参数, 它们分别是:
 
 * `el`
 * `binding`
 * `vnode`
 * `oldVnode`
 
-
-更全的内容在这里 [Vue: 钩子函数的参数](https://cn.vuejs.org/v2/guide/custom-directive.html#%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0)
+更全参数的内容在这里 [Vue: 钩子函数的参数](https://cn.vuejs.org/v2/guide/custom-directive.html#%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0)
 
 本篇只提一下这个 `binding` 参数:
 
-...
+主要执行的执行逻辑需要的内容几乎都可以在这里找到
 
 #### 动态指令参数
 
-自定义指令更加实际化的应用模式, 就是在指令后加参数, 它的基本语法是这样的
+自定义指令更加实际化的应用模式, 就是传递参数, 它的基本语法是这样的
 
 `v-directive:[arg]="value"`
 
 参数有两种方式进行传递:
 
-* 通过 `arg` 进行传递, 这会出现在`binding.arg`
-* 通过 `value` 传递, 这会出现在 `binding.value`
+* 通过 `arg` 进行传递, 它会出现在`binding.arg`
+* 通过 `value` 传递, 它会出现在 `binding.value`
