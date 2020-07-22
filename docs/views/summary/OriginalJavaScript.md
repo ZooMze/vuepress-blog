@@ -321,7 +321,7 @@ for (var value in myArray) {
 `for...in` 和 `for...of` 都是在迭代, 区别是两者的迭代方式
 
 * `for...in` 以任意顺序迭代对象的 __[可枚举属性](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Enumerability_and_ownership_of_properties)__。
-* `for...of` 遍历 __[可迭代对象](../studyBasement/Iterator&Generator.md)__ 定义要迭代的数据。
+* `for...of` 遍历 __[可迭代对象](../javaScript/Iterator&Generator.md)__ 定义要迭代的数据。
 
 ::: tip 记忆点
 `for...in` 遍历的是 **键名** (ENU & IN-KEY: 谐音 in case)

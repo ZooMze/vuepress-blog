@@ -95,7 +95,7 @@ var obj = {
 console.log(obj.getNum()); // 1
 ```
 
-言归正传, 请出我们的借刀杀..哦不借物达人 [call / apply](../studyBasement/Call&Apply&Bind.md) 来将this指向变回 `<body>` 对象:
+言归正传, 请出我们的借刀杀..哦不借物达人 [call / apply](../JavaScript/Call&Apply&Bind.md) 来将this指向变回 `<body>` 对象:
 
 ```js {5,9}
 function debounce(func, wait) {

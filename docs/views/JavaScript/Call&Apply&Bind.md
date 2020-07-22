@@ -30,13 +30,13 @@ func.bind(thisArg, param1, param2, ...)
 #### 参数
 
 * `thisArg`(可选)
-  1. func的this指向thisArg对象；
-  2. 非严格模式下：若thisArg指定为null，undefined，则func的this指向window对象；
-  3. 严格模式下：func的this为undefined；
-  4. 值为原始值(数字，字符串，布尔值)的this会指向该原始值的自动包装对象，如 String、Number、Boolean。 
+  1. `func` 的 `this` 指向 `thisArg` 对象；
+  2. 非严格模式下：若 `thisArg` 指定为 `null`，`undefined` ，则 `func` 的 `this` 指向`window` 对象；
+  3. 严格模式下：`func` 的 `this` 为 `undefined`；
+  4. 值为原始值(数字，字符串，布尔值)的 `this` 会指向该原始值的自动包装对象，如 `String` 、`Number` 、`Boolean`。
 
 * `param1`，`param2`(可选): 传给 `func` 的参数。
-  1. 如果param不传或为 null/undefined，则表示不需要传入任何参数.
+  1. 如果 `param` 不传或为 `null` / `undefined` ，则表示不需要传入任何参数.
   2. apply第二个参数为 [类数组](./Call&Apply&Bind.md#类数组) 对象，数组内各项的值为传给func的参数。
 
 ### 必须是函数才可以使用
@@ -148,3 +148,30 @@ const array = [45, 12, 55, 68, 78]
 Math.max.call(Math, array) // >> 78
 Math.min.call(Math, array) // >> 12
 ```
+
+### 找回执行上下文Context
+
+先看如下代码:
+
+```js
+var module = {
+  x: "xxx",
+  getX: function() {
+    return this.x;
+  }
+}
+
+console.log(module.getX()); // >> xxx
+
+var getXOuter = module.getX
+console.log(getXOuter()) // >> undefined
+```
+
+让`getXOuter()` 也能正常输出 `xxx`, 肥肠简单:
+
+```js
+var getXOuter = module.getX
+console.log(getXOuter.call(module)) // >> xxx
+```
+
+具体的关于执行上下文、作用域、this相关内容可以在这里查看: [传送](./This&Context&Scope.md)
