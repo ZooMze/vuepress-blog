@@ -174,4 +174,6 @@ var getXOuter = module.getX
 console.log(getXOuter.call(module)) // >> xxx
 ```
 
-具体的关于执行上下文、作用域、this相关内容可以在这里查看: [传送](./This&Context&Scope.md)
+本例展示了在不同的执行上下文中this的指向是**不同**的, 前者的上下文是module, 后者是window; 所以不要主观的依据this存在的位置来判断其实际的指向
+
+具体的关于执行上下文、作用域、this相关内容可以在这里查看这篇: [执行上下文、作用域、this](./This&Context&Scope.md)
