@@ -1,6 +1,6 @@
 ---
 title: Vue 要点总结
-date: 2019-12-21
+date: 2019-3-21
 categories:
  - 基础
  - 备忘
