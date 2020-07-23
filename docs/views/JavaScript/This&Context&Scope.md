@@ -226,7 +226,7 @@ FunctionExectionContext = {
 var aLongLongLongNameObject = {
   a: 'text',
   func1() {
-    return aLongLongLongNameObject.a
+    return aLongLongLongNameObject.a // 名字太长了, 蓝瘦
   }
 }
 
@@ -253,4 +253,148 @@ var aLongLongLongNameObject = {
 
 `func1()` 里的变量和全局变量重名了, 但由于作用域的分隔, 这就导致阅读代码时如果没有仔细阅读时会产生歧义
 
-于是 this 应运而生, 他指代了当前作用域本身
+于是 this 应运而生, 它指向函数**调用位置的对象**, 承载了当前调用对象本身所有的内容(例如在window中调用则承载了window本身)
+
+::: warning 调用位置是关键!
+想要弄清this到底指向谁, 正确的方式是分析函数调用的位置
+:::
+
+### 误区
+
+上一节反复提到了调用位置的对象, 是的这是this的常见误区, this **不指向函数自身或是作用域**。
+
+::: warning 要点
+
+* this 在函数被调用时就被确定好了!
+* this 与本函数在何处定义无关!
+* this 是在执行上下文创建时被确定了, 所以无法再次更改
+:::
+
+### 指向规则
+
+前面也有提到通常情况下, 未直接指定调用位置对象的函数, 指向window, 这儿还有一些例外, 比如 `setTimeout` / `setInterval`
+
+`setTimeout` 调用的代码运行在与所在函数完全分离的执行环境上。这会导致这些代码中包含的 `this` 关键字会指向 `window` (或全局)对象。因此通常这两个的函数的内普通回调函数的 this 指向 window
+
+当然也可以通过箭头函数进行修改指向, 但要注意, 箭头函数继承执行上下文的环境, 但是一旦创建好后, 其this 指向就被确定为上一个执行上下文, 并不会由于调用位置而发生变化, 本文后续会通过例子来说明箭头函数相关的内容
+
+```js
+var num = 0
+
+class Obj {
+  constructor(num) {
+    this.num = num
+  }
+  func() {
+    console.log(`print - ${this.num}`)
+  }
+  func1() {
+    setTimeout(function() {
+      console.log(`setTimeout - ${this.num}`)
+    }, 1000)
+  }
+  func2() {
+    setInterval(function() {
+      console.log(`setInterval - ${this.num}`)
+    }, 1000)
+  }
+}
+
+var obj = new Obj(1)
+
+obj.func()  // >> print - 1
+obj.func1() // >> setTimeout - 0
+obj.func2() // >> setInterval - 0 , setInterval - 0 , setInterval - 0 ...
+```
+
+### 迷惑行为大赏
+
+this的指向有时候确实会让人迷惑, 这里还有几个迷惑的例子来帮你了解更多相关内容
+
+#### 被忽略的this
+
+当在借用方法时, `call` / `apply` / `bind` 时, 如果将this指定为 `null` 或者 `undefined`, 那么这个值会被忽略, 然后this将会指向window
+
+```js
+function func() {
+  console.log(this.a)
+}
+
+var a = 2
+func.apply(null) // >> 2
+```
+
+#### 隐式丢失
+
+```js
+function func() {
+  console.log(this.a)
+}
+
+var a = '1'
+var obj = {
+  a: '2'
+  func: func
+}
+
+var newFunc = obj.func
+
+newFunc() // >> '1'
+```
+
+不是说好在哪里调用 this 就是谁吗, 怎么又跑到 window 上去了? 确实是如此, 这里 `newFunc` 实际上是引用了 `obj.func`, `obj.func` 还是引用, 所以最本质都是在引用 `func` 这个函数, 既然是引用函数, 那就看这个函数最终在哪里执行, 很显然 `newFunc` 是在全局环境下执行的, 所以此时 this 指向 window
+
+再来一个更迷惑的:
+
+```js
+function func() {
+  console.log(this.a)
+}
+
+var a = '1'
+var obj1 = {
+  a: '2',
+  func: func
+}
+
+var obj2 = {
+  a: '3'
+}
+(obj2.func = obj1.func)() // >> '1'
+```
+
+这里是有个隐藏知识点, 就是**赋值语句是有返回的, 返回被赋值的内容**; 根据上面的引用原则, 这里是返回的 `func` 函数的引用, 所以相当于还是在 window 环境下直接调用 `func`
+
+#### 箭头函数
+
+现在来填刚刚之前的坑: 箭头函数内this指向
+
+当你定义一个箭头函数时, 箭头函数内的this指向当前箭头函数所处函数的this, 即箭头函数父函数的this
+
+箭头函数的出现干扰了以往的this的指向模式, ES5之前, this是在创建执行上下文的时候(也就是函数执行)就确定; 而箭头函数则是在这个函数被创建出来就确定了(即函数执行之前), 并且一旦创建就不能再修改了
+
+来看这个例子:
+
+```js
+function func() {
+  return () => {
+    console.log(this.a)
+  }
+}
+
+var a = '1'
+var obj1 = {
+  a: '2'
+}
+
+var obj2 = {
+  a: '3'
+}
+
+var bar = func.call(obj1) // 在这一步函数已被创建好, this已确定
+bar.call(obj2); // >> '2'
+
+// 同样的, 下面的代码也不会输出 '3'
+var foo = func() // 在这一步函数已被创建好, this已确定
+foo.call(obj2) // >> '1'
+```

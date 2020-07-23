@@ -66,7 +66,7 @@ container.onmousemove = debounce(getUserAction, 1000);
 
 现在变成了, 从你开始晃鼠标开始, 如果不停下来, `getUserAction` 这个函数是不会执行的, 极大的减少了不需要的内存占用!
 
-## this 的指向问题
+## this 的指向错误
 
 现在将打印的内容改为 `console.log(this)`, 看看在使用和不使用刚刚写的防抖函数的情况下, 输出了些什么
 
@@ -75,34 +75,37 @@ container.onmousemove = debounce(getUserAction, 1000);
 ![mousemove](./../../.vuepress/public/images/debounce/thisDebounce.png
 )
 
-在调用防抖函数后, `this` 的指向竟然跑到  `window` 对象上去了, 由于 `setTimeout()` 调用的代码运行在与所在函数完全分离的执行环境上。这会导致这些代码中包含的 `this` 关键字会指向 `window` (或全局)对象。
+正确的指向应该是 `body` 对象, 但由于
 
-关于这个 `this` 指向问题, 看如下这个小例子:
+关于这个 `this` 指向问题, 先看如下这个小例子, 或者看 [this 的指向规则](../JavaScript/This&Context&Scope.md#指向规则):
 
 ```js
 var num = 1
 var obj = {
   num: 2,
   getNum: function name1() {
-  console.log(this) // 指向obj
-    return (function name2() {
+    console.log(this) // 指向obj
+    return (function () {
       console.log(this) // 指向window
       return this.num;
     })();
   }
 }
 
-console.log(obj.getNum()); // 1
+obj.getNum(); // >> 1
 ```
 
-言归正传, 请出我们的借刀杀..哦不借物达人 [call / apply](../JavaScript/Call&Apply&Bind.md) 来将this指向变回 `<body>` 对象:
+言归正传, 请出我们的借刀杀..哦不借物达人 [call / apply](../JavaScript/Call&Apply&Bind.md) 来将this指向变回 `body` 对象:
 
 ```js {5,9}
+var container = document.getElementsByTagName('body')[0];
+var count = 1
+
 function debounce(func, wait) {
   var timeout;
-  console.log(this)
+  console.log(this) // >> window
   return function() {
-    var self = this;
+    var self = this; // 这里的 this 实际指向 <body>
 
     clearTimeout(timeout)
     timeout = setTimeout(function() {
@@ -110,16 +113,19 @@ function debounce(func, wait) {
     }, wait);
   }
 }
-...
+
 function getUserAction() {
-  console.log(this);
+  console.log(this); // >> <body>
+  console.log(`这是第${count++}次调用这个事件了!`);
 };
+
+container.onmousemove = debounce(getUserAction, 1000);
 ```
 
-发现了吗, 这里其实就是闭包
+好, 相信你已经看过关于 this 的内容了, 解释一下这里为啥 this 有不同的指向:
 
-![mousemove](./../../.vuepress/public/images/debounce/thisClosure.png
-)
+* 首先 `debounce` 是在 `window` 环境下执行的, 所以在 `debounce` 内部, `this` 是指向 `window`
+* 然后 `debounce` 返回了一个函数, 这个函数真正被 `onmousemove` 执行, 所以在这里的 `this` 指向 `<body>`
 
 好了, 现在指向正确啦!
 
@@ -145,7 +151,7 @@ function debounce(func, wait) {
 
     clearTimeout(timeout)
     timeout = setTimeout(function() {
-        func.apply(self, args) // 这里就不能用call了
+      func.apply(self, args) // 这里就不能用call了
     }, wait);
   }
 }

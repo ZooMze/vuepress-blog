@@ -201,6 +201,7 @@ this.$set(listData, 2, { name: 'd', id: '4' });
 
 * 更详细的内容查看官方文档: [全局API:  $set](https://cn.vuejs.org/v2/api/#Vue-set)
 
+
 ## Virtual DOM
 
 Virtual DOM 简单的说就是一颗树，一颗以javaScript对象（VNode）作为基础的树，用对象的属性来描述节点，因此这个对象至少包含标签名（tag）、属性（attrs）、和 子元素对象（chuildren）
@@ -209,11 +210,72 @@ Virtual DOM 的最终目的是将虚拟的节点渲染到视图上，其实它�
 
 ### 优势
 
-1. 具备跨平台的优势；
-
-2. 操作DOM慢，js运行的效率高；vue 将 DOM 对比放在js层，提高效率，Virtual DOM 本质上其实就是 js 和 dom 之间的一个缓存，通过 `patching` 算法计算出真正需要更新的节点，最大限度的减少DOM操作；
-
+1. 具备跨平台的优势
+2. 操作DOM慢，js运行的效率高；vue 将 DOM 对比放在js层，提高效率，Virtual DOM 本质上其实就是 js 和 dom 之间的一个缓存，通过 `patching` 算法计算出真正需要更新的节点，最大限度的减少DOM操作
 3. 提升渲染的性能；dom操作的减少，可以避免更多的回流和重绘等，更加高效的提高性能
+
+## VNode
+
+我们已经知道 Vue 和 虚拟DOM 关系深远, 同时 虚拟DOM 树上会有诸多节点 (Node), 他们可以通过 `createElement` 创建并返回, 这样的节点就被称为 '虚拟节点'(Virtual Node), 简称 **VNode**
+
+::: tip `createElement`
+官方文档中描述 `createElement` 准确的名称应该是 'createElementDescription', 因为它并未真正的返回一个元素, 只返回了一个元素的描述信息
+:::
+
+### createElement
+
+createElement只能在 `render` 函数中或者是通过 `vm.$createElement()` 来调用!
+
+了解了这个函数所返回的内容, 下面就需要使用它来构造VNode, 说到构造肯定就要依赖参数啦, 我们来看看它接受些什么参数
+
+参数顺序|参数类型|描述|举例
+:-|:-|:-|:-
+1|{ String / Object / Function }|标签名/组件选项对象/或者resolve了前两者的async函数| 'div'
+2|{ Object }|与模板中attribute所对应的数据对象|这个示例下一节将详细描述
+3|{ String / Array}|子级VNode, 同样需要 createElement 生成| [ ... ]
+
+是的, 你可能发现了, 第一个参数可以直接传入组件, 当传入组件时, 要么**预留插槽**, 要么 **指定插槽**!
+
+```js
+// template是个预留了插槽的组件
+...
+this.$createElement(
+  {
+    template: `
+      <div>
+        <p>我下方有个插槽, 我还有自己的数据: {{ someData }}</p>
+        <slot><slot>
+      </div>
+    `,
+    data() {
+      return {
+        someData: 'xxx'
+      }
+    }
+  },
+  // 这里忽略了第二个参数
+  [
+    '这个是文本节点',
+    this.$createElement('p', '这个是p节点')
+  ]
+)
+```
+
+实际使用中, 可以忽略第二个参数, 只写标签和子节点一样能被正确识别, 这是因为 vue 是根据参数类型进行识别的, 因为第二三个参数类型不可能相同
+
+上述代码是自带插槽的情况, 那如果没有在template内指定插槽呢? 这时候就需要访问 `this.$slots.default`
+
+TODO...
+
+无论哪种写法, 上面的例子最终渲染成这样:
+
+```html
+<div>
+  <p>我下方有个插槽, 我还有自己的数据: xxx</p>
+  "这个是文本节点"
+  <p>这个是p节点</p>
+</div>
+```
 
 ## vuex
 
