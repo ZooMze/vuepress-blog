@@ -290,41 +290,42 @@ vuex中提供了若干辅助函数, 通过扩展组件内原有的内容(即 对
 我们先在store中简单定义一些基本内容, 方便后面的代码演示:
 
 ```js
+// store.js
 ...
-  state: {
-    name: 'a',
-    name2: 'aa'
+state: {
+  name: 'a',
+  name2: 'aa'
+},
+getters: {
+  getName: state => {
+    return state.name
   },
-  getters: {
-    getName: state => {
-      return state.name
-    },
-    getNewName: (state) => (idNumber) => { // 这里可以让getter带参调用
-      return `${state.name} ${idNumber}`
-    }
-  },
-  mutations: { // 这里命名的方式是参考了vuex的官网, 也可以不这样命名
-    CHANGE_NAME: state => {
-      state.name = 'b'
-    },
-    CHANGE_LAST_NAME: (state, params) => {
-      state.name = state.name + params
-    }
-  },
-  actions: {
-    changeName(state) {
-      state.commit('CHANGE_NAME')
-    },
-    ChangeLastName({ commit }, payload) {
-      commit('CHANGE_LAST_NAME')
-    },
+  getNewName: (state) => (idNumber) => { // 这里可以让getter带参调用
+    return `${state.name} ${idNumber}`
   }
+},
+mutations: { // 这里命名的方式是参考了vuex的官网, 也可以不这样命名
+  CHANGE_NAME: state => {
+    state.name = 'b'
+  },
+  CHANGE_LAST_NAME: (state, params) => {
+    state.name = state.name + params
+  }
+},
+actions: {
+  changeName(state) {
+    state.commit('CHANGE_NAME')
+  },
+  ChangeLastName({ commit }, payload) {
+    commit('CHANGE_LAST_NAME')
+  },
+}
 ...
 ```
 
 #### mapState
 
-快速获取状态state, 不用再重复的写 `this.$store.state.name`, 并且可以将state的变量再取一个新的变量名
+快速获取状态 `state` 的值, 不用再重复的写 `this.$store.state.name`, 并且可以将state的变量再取一个新的变量名
 
 ```js
 ...
@@ -353,7 +354,7 @@ this.mixName // >> 'a 666'
 
 #### mapGetters
 
-快速获取getter, getter用于对state的状态进行派生和逻辑处理等, 它存在的意思有点类似于组件里的计算属性一样
+快速获取 `getter`, `getter` 用于对 `state` 的状态进行派生和逻辑处理等, 它存在的意思有点类似于组件里的计算属性 `computed` 一样
 
 ```js
 import { mapGetters } from 'vuex'
@@ -374,9 +375,9 @@ this.getNewName(777) // >> 'a 777'
 
 #### mapMutation
 
-mutation的用处是来改变state内的值, 并且在vuex中只能通过这一种方式进行显示提交, mapMutation 是用来提供映射来简化代码
+`mutation` 的用处是来改变 `state` 内的值, 并且在vuex中只能通过这一种方式进行显示提交, `mapMutation` 是用来提供映射来简化代码, 即不需要再写一堆 `this.$store.commit()`, 就像是组件内自带的函数一样调用
 
-\* mapMutation 是扩展了methods对象
+\* **mapMutation 是扩展了methods对象**
 
 ```js
 import { mapMutations } from 'vuex'
@@ -389,9 +390,9 @@ export default {
       'CHANGE_LAST_NAME' // 将 `this.CHANGE_LAST_NAME(amount)` 映射为 `this.$store.commit('CHANGE_LAST_NAME', amount)`
     ]),
     // 也可以改名字
-    ...mapMutations({
-      changeLastName: 'CHANGE_LAST_NAME'
-    })
+    // ...mapMutations({
+    //   changeLastName: 'CHANGE_LAST_NAME'
+    // })
   }
 }
 
@@ -402,7 +403,7 @@ this.changeLastName()                // >> 'a'
 
 #### mapActions
 
-当一个组件内多次重复调用 `this.$store.dispatch()`来提交action时, 同样可以使用类似上面的 `mapActions` 来达到映射简化的目的
+当一个组件内多次重复调用 `this.$store.dispatch()` 来提交action时, 同样可以使用类似上面的 `mapActions` 来达到映射简化的目的
 
 ```js
 import { mapGetters } from 'vuex'
@@ -420,15 +421,15 @@ this.change('action') // 相当于调用了 this.$store.dispatch('changeLastName
 
 ### Modules
 
-当状态过多时, 全部揉在一个store里就会变得臃肿和难以维护, 这时就要进行拆分成module, 每一个module都可以拥有自己的state, getters, mutations, actions
+当状态过多时, 全部揉在一个store里就会变得臃肿和难以维护, 这时就要进行拆分成 `modules`, 每一个 `module` 都可以拥有自己的 `state`, `getters`, `mutations`, `actions`
 
 ::: warning 注意
-这些modules 里的所有状态内容, 会被合并到全局状态里面去, 所以可以通过添加 `namespaced: true` 将其变为带命名空间的模块, 已达到更高的封装性
+这些 `modules` 里的所有状态内容, 会被合并到全局状态里面去, 所以可以通过添加 `namespaced: true` 将其变为带命名空间的模块, 已达到更高的封装性
 
 ```js
-// in user.js
+// a module named user.js
 export default {
-  namespaced: true, // 开启后, 所有内容会加上module的名字作为前缀
+  namespaced: true, // 开启后, 所有内容会加上本module的名字作为前缀
   state,
   getters: {
     getUser: (state) => {
@@ -440,13 +441,15 @@ export default {
 }
 ```
 
-这样一来, 当你在外部需要访问 user module 中的getUser()时, 其名称会变为 'user/getUser', 例如
+这样一来, 当你在外部需要访问 user 这个 module 中的 `getUser()` 时, 其名称会变为 `'user/getUser'`, 例如
 
 ```js
-// in component
+// in another component
+...
 computed: {
-  ...mapGetters({ getUser: 'user/getUser' }) // 这里重新命名了
+  ...mapGetters({ getUser: 'user/getUser' }) // 这里又是重命名的方式引入的
 },
+...
 ```
 
 :::
@@ -457,12 +460,12 @@ computed: {
 
 先定义一个父组件 `Parent.vue`:
 
-```js
+```html
 <template>
   <div>
     I'm Parent, I have value:  {{ testValue }}
     <button @click="changeTest">Change value in parent</button>
-    <son value="testValue"/>
+    <son /> <!-- 注意这里没有传参 -->
   </div>
 </template>
 
@@ -490,33 +493,33 @@ computed: {
 </script>
 ```
 
-然后再来个子组件 `Son.vue`, 这里没有接收任何参数, 也不向下传递任何参数
+然后再来个子组件 `Son.vue`, 这里同样没有接收任何参数, 也不向下传递任何参数, 仅作为一个中间层
 
-```js
+```html
 <template>
   <div>
-    I'm Son.
-    <grand-son/>
+    I'm Son, I still have a son.
+    <grand-son />
   </div>
 </template>
 
 <script>
-  import grandSon from './grandSon'
-  export default {
-    name: 'son',
-    components: { grandSon },
-    data() {
-      return {
-        title: 'son'
-      }
+import grandSon from './GrandSon'
+export default {
+  name: 'Son',
+  components: { grandSon },
+  data() {
+    return {
+      title: 'Son'
     }
   }
+}
 </script>
 ```
 
-最后再来个孙组件 `GrandSon.vue`, 在孙组件直接获取 `Parent` 组件所提供的值
+最后再来个孙组件 `GrandSon.vue`, 在没有直接参数流动的情况下孙组件直接获取 `Parent` 组件所提供的值
 
-```js
+```html
 <template>
   <div>
     I'm GrandSon, I extends value : {{ value }} from Parent.
@@ -525,7 +528,7 @@ computed: {
 
 <script>
   export default {
-    name: 'grandSon',
+    name: 'GrandSon',
     inject: ['injectValue'], // 在inject内接收
     mounted() {
       console.log(this.injectValue)
@@ -534,13 +537,95 @@ computed: {
 </script>
 ```
 
-这就是依赖注入的最基础的应用。
+页面结果如下:
+
+![provide&inject](../../.vuepress/images/../public/images/VueSummary/provide&inject.png)
+
+但是我们如果点击一下change按钮, 会发现值在孙组件中并不会更新, 这一点vue也明确说明了
+
+::: tip 非响应式
+`provide` 和 `inject` 绑定并不是可响应的。这是刻意为之的。然而，如果你传入了一个可监听的对象，那么其对象的 `property` 还是可响应的。
+:::
+
+这里挖个坑, 什么是可监听的对象? // TODO
+
+### 响应式解决方案
+
+响应式的存在非常有必要, 通常开发中总是在父组件和子组件要同步更新数据, 既然vue不默认提供, 那我们就想办法让他响应
+
+首先更改父组件 `Parent.vue`
+
+```html
+<template>
+  <div>
+    I'm Parent, I have value:  {{ testValue }}
+    <button @click="changeTest">Change value in parent</button>
+    <son />
+  </div>
+</template>
+
+<script>
+  import Son from './Son'
+  export default {
+    name: 'parent',
+    components: { Son },
+    provide() {
+      return {
+        injectValue: _ => this.testValue // 这里使用函数返回, 保留引用
+      }
+    },
+    data() {
+      return {
+        testValue: 'test'
+      }
+    },
+    methods: {
+      changeTest() {
+        this.testValue = 'newValue'
+      }
+    }
+  }
+</script>
+```
+
+再来修改 `GrandSon.vue`:
+
+```html
+<template>
+  <div>
+    <!-- 不再直接使用 injectValue 来接收 -->
+    I'm {{ title }}, I extends value : "{{ computedInjectValue }}" from Parent.
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'GrandSon',
+    inject: ['injectValue'], // 以同样的方式inject内接收, 但是这里的值其实是函数哦
+    data() {
+      return {
+        injectData: null,
+        title: 'GrandSon'
+      }
+    },
+    computed: {
+      computedInjectValue() { // 用计算属性获取最终的值
+        return this.injectValue()
+      }
+    }
+  }
+</script>
+```
+
+![provide&inject](../../.vuepress/images/../public/images/VueSummary/provide&inject-responsive.png)
+
+可以发现, 点击后数据是响应的
 
 更多内容查看官方文档: [Vue: provide / inject](https://cn.vuejs.org/v2/api/#provide-inject)
 
 ## 自定义指令
 
-提到指令, vue自身就有很多指令, 什么v-model、v-for、 v-if, 天天用天天见, 本节就介绍一下如何创建一个自定义的指令
+vue自身就有很多指令, 什么v-model、v-for、 v-if, 天天用天天见, 本节就介绍一下如何创建一个自定义的指令
 
 自定义指令有两种注册方法:
 
@@ -563,9 +648,8 @@ Vue.directive('focus', {
 // 组件内注册
 // 通过directives选项注册
 directives: {
-  focus: { // 这里是名字
-    // 指令的定义
-    inserted: function (el) {
+  focus: { // 这里是指令的名字
+    inserted(el) { // 指令的钩子函数, 下面会详细说明
       el.focus()
     }
   }
