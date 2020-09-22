@@ -12,6 +12,7 @@ tags:
 直接在 `node_modules` 里面翻太蛋疼了, 于是直接把 var.scss 的内容放到这里, 方便查看。
 
 ::: tip 阅读须知
+
 * **以下全部代码连续存在于一个文件var.scss, 这里是为了方便查看, 做的分段目录**
 * **以下代码为了目录排版做了略微的调整顺序和归类**
 * **`Ctrl + F` 搞定一切**
@@ -24,7 +25,9 @@ tags:
 // type|skipAutoTranslation|Category|Order
 // skipAutoTranslation 1
 ```
+
 ## Transition 动画
+
 ```scss
 /* Transition
 -------------------------- */
@@ -35,7 +38,9 @@ $--md-fade-transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1), opacity 3
 $--border-transition-base: border-color .2s cubic-bezier(.645,.045,.355,1) !default;
 $--color-transition-base: color .2s cubic-bezier(.645,.045,.355,1) !default;
 ```
+
 ## Color 颜色
+
 ```scss
 /* Color
 -------------------------- */
@@ -93,7 +98,9 @@ $--border-color-extra-light: #F2F6FC !default;
 /// color|1|Background Color|4
 $--background-color-base: #F5F7FA !default;
 ```
+
 ## Link 链接文本
+
 ```scss
 /* Link
 -------------------------- */
@@ -122,7 +129,9 @@ $--link-danger-font-color: $--color-danger !default;
 /// color||Color|0
 $--link-info-font-color: $--color-info !default;
 ```
-# Border 边框
+
+## Border 边框
+
 ```scss
 /* Border
 -------------------------- */
@@ -148,13 +157,17 @@ $--box-shadow-dark: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .12) !de
 $--box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !default;
 
 ```
+
 ## Fill 填充色
+
 ```scss
 /* Fill
 -------------------------- */
 $--fill-base: $--color-white !default;
 ```
+
 ## Typography 字体
+
 ```scss
 /* Typography
 -------------------------- */
@@ -182,13 +195,17 @@ $--font-line-height-primary: 24px !default;
 $--font-line-height-secondary: 16px !default;
 $--font-color-disabled-base: #bbb !default;
 ```
+
 ## Size 尺寸
+
 ```scss
 /* Size
 -------------------------- */
 $--size-base: 14px !default;
 ```
+
 ## zIndex 层级
+
 ```scss
 /* z-index
 -------------------------- */
@@ -196,7 +213,9 @@ $--index-normal: 1 !default;
 $--index-top: 1000 !default;
 $--index-popper: 2000 !default;
 ```
+
 ## Disable 禁用状态
+
 ```scss
 /* Disable base
 -------------------------- */
@@ -204,14 +223,18 @@ $--disabled-fill-base: $--background-color-base !default;
 $--disabled-color-base: $--color-text-placeholder !default;
 $--disabled-border-base: $--border-color-light !default;
 ```
+
 ## Icon 图标
+
 ```scss
 /* Icon
 -------------------------- */
 $--icon-color: #666 !default;
 $--icon-color-base: $--color-info !default;
 ```
+
 ## Checkbox 复选框
+
 ```scss
 /* Checkbox
 -------------------------- */
@@ -276,7 +299,9 @@ $--checkbox-button-checked-font-color: $--color-white !default;
 /// color||Color|0
 $--checkbox-button-checked-border-color: $--color-primary !default;
 ```
+
 ## Radio 单选框
+
 ```scss
 /* Radio
 -------------------------- */
@@ -342,7 +367,9 @@ $--radio-button-checked-font-color: $--color-white !default;
 $--radio-button-checked-border-color: $--color-primary !default;
 $--radio-button-disabled-checked-fill: $--border-color-extra-light !default;
 ```
+
 ## Select 下拉选择器
+
 ```scss
 /* Select
 -------------------------- */
@@ -548,7 +575,9 @@ $--input-mini-font-size: 12px !default;
 /// height||Other|4
 $--input-mini-height: 28px !default;
 ```
+
 ## Cascader 级联选择器
+
 ```scss
 /* Cascader
 -------------------------- */
@@ -569,7 +598,9 @@ $--cascader-tag-background: #f0f2f5;
 -------------------------- */
 $--cascader-height: 200px !default;
 ```
+
 ## Group 分组
+
 ```scss
 /* Group
 -------------------------- */
@@ -580,7 +611,9 @@ $--group-title-color: $--color-black !default;
 $--group-title-font-size: $--font-size-base !default;
 $--group-title-width: 66px !default;
 ```
+
 ## Tab 标签页
+
 ```scss
 /* Tab
 -------------------------- */
@@ -595,7 +628,9 @@ $--tab-vertical-header-width: 90px !default;
 $--tab-vertical-header-count-color: $--color-white !default;
 $--tab-vertical-header-count-fill: $--color-text-secondary !default;
 ```
+
 ## Button 按钮
+
 ```scss
 /* Button
 -------------------------- */
@@ -682,7 +717,9 @@ $--button-info-background-color: $--color-info !default;
 $--button-hover-tint-percent: 20% !default;
 $--button-active-shade-percent: 10% !default;
 ```
+
 ## Switch 开关
+
 ```scss
 /* Switch
 -------------------------- */
@@ -700,7 +737,9 @@ $--switch-height: 20px !default;
 // height||Other|4
 $--switch-button-size: 16px !default;
 ```
+
 ## Dialog 对话框
+
 ```scss
 /* Dialog
 -------------------------- */
@@ -715,7 +754,9 @@ $--dialog-font-line-height: $--font-line-height-primary !default;
 /// padding||Spacing|3
 $--dialog-padding-primary: 20px !default;
 ```
+
 ## Table 表格
+
 ```scss
 /* Table
 -------------------------- */
@@ -733,7 +774,9 @@ $--table-current-row-background-color: $--color-primary-light-9 !default;
 $--table-header-background-color: $--color-white !default;
 $--table-fixed-box-shadow: 0 0 10px rgba(0, 0, 0, .12) !default;
 ```
+
 ## Pagination 分页
+
 ```scss
 /* Pagination
 -------------------------- */
@@ -757,7 +800,9 @@ $--pagination-button-disabled-background-color: $--color-white !default;
 /// color||Color|0
 $--pagination-hover-color: $--color-primary !default;
 ```
+
 ## Popup & Popover 弹窗
+
 ```scss
 /* Popup
 -------------------------- */
@@ -783,7 +828,9 @@ $--popover-title-font-size: 16px !default;
 /// color||Color|0
 $--popover-title-font-color: $--color-text-primary !default;
 ```
+
 ## Tooltip 文字提示
+
 ```scss
 /* Tooltip
 -------------------------- */
@@ -799,7 +846,9 @@ $--tooltip-arrow-size: 6px !default;
 /// padding||Spacing|3
 $--tooltip-padding: 10px !default;
 ```
+
 ## Tag 标签
+
 ```scss
 /* Tag
 -------------------------- */
@@ -818,7 +867,9 @@ $--tag-font-size: 12px !default;
 $--tag-border-radius: 4px !default;
 $--tag-padding: 0 10px !default;
 ```
+
 ## Tree 树
+
 ```scss
 /* Tree
 -------------------------- */
@@ -829,7 +880,9 @@ $--tree-font-color: $--color-text-regular !default;
 /// color||Color|0
 $--tree-expand-icon-color: $--color-text-placeholder !default;
 ```
+
 ## Dropdown 下拉菜单
+
 ```scss
 /* Dropdown
 -------------------------- */
@@ -837,7 +890,9 @@ $--dropdown-menu-box-shadow: $--box-shadow-light !default;
 $--dropdown-menuItem-hover-fill: $--color-primary-light-9 !default;
 $--dropdown-menuItem-hover-color: $--link-color !default;
 ```
+
 ## Badge 角标
+
 ```scss
 /* Badge
 -------------------------- */
@@ -851,7 +906,9 @@ $--badge-padding: 6px !default;
 /// height||Other|4
 $--badge-size: 18px !default;
 ```
+
 ## Card 卡片
+
 ```scss
 /* Card
 --------------------------*/
@@ -861,7 +918,9 @@ $--card-border-radius: 4px !default;
 /// padding||Spacing|3
 $--card-padding: 20px !default;
 ```
+
 ## Slider 滑动条
+
 ```scss
 /* Slider
 --------------------------*/
@@ -881,7 +940,9 @@ $--slider-button-size: 16px !default;
 $--slider-button-wrapper-size: 36px !default;
 $--slider-button-wrapper-offset: -15px !default;
 ```
+
 ## Steps 步骤条
+
 ```scss
 /* Steps
 --------------------------*/
@@ -889,7 +950,9 @@ $--steps-border-color: $--disabled-border-base !default;
 $--steps-border-radius: 4px !default;
 $--steps-padding: 20px !default;
 ```
+
 ## Menu 菜单
+
 ```scss
 /* Menu
 --------------------------*/
@@ -901,7 +964,9 @@ $--menu-item-font-color: $--color-text-primary !default;
 $--menu-background-color: $--color-white !default;
 $--menu-item-hover-fill: $--color-primary-light-9 !default;
 ```
+
 ## Rate 评分
+
 ```scss
 /* Rate
 --------------------------*/
@@ -914,7 +979,9 @@ $--rate-icon-size: 18px !default;
 $--rate-icon-margin: 6px !default;
 $--rate-icon-color: $--color-text-placeholder !default;
 ```
+
 ## DatePicker 时间选择器
+
 ```scss
 /* DatePicker
 --------------------------*/
@@ -936,7 +1003,9 @@ $--datepicker-active-color: $--color-primary !default;
 $--datepicker-hover-font-color: $--color-primary !default;
 $--datepicker-cell-hover-color: #fff !default;
 ```
+
 ## Loading 加载
+
 ```scss
 /* Loading
 --------------------------*/
@@ -945,14 +1014,18 @@ $--loading-spinner-size: 42px !default;
 /// height||Other|4
 $--loading-fullscreen-spinner-size: 50px !default;
 ```
+
 ## Scrollbar 滚动条
+
 ```scss
 /* Scrollbar
 --------------------------*/
 $--scrollbar-background-color: rgba($--color-text-secondary, .3) !default;
 $--scrollbar-hover-background-color: rgba($--color-text-secondary, .5) !default;
 ```
+
 ## Carousel 走马灯
+
 ```scss
 /* Carousel
 --------------------------*/
@@ -969,7 +1042,9 @@ $--carousel-indicator-padding-horizontal: 4px !default;
 $--carousel-indicator-padding-vertical: 12px !default;
 $--carousel-indicator-out-color: $--border-color-hover !default;
 ```
+
 ## Collapse 折叠面板
+
 ```scss
 /* Collapse
 --------------------------*/
@@ -990,7 +1065,9 @@ $--collapse-content-font-size: 13px !default;
 /// color||Color|0
 $--collapse-content-font-color: $--color-text-primary !default;
 ```
+
 ## Transfer 穿梭框
+
 ```scss
 /* Transfer
 --------------------------*/
@@ -1011,7 +1088,9 @@ $--transfer-item-height: 30px !default;
 /// height||Other|4
 $--transfer-filter-height: 32px !default;
 ```
+
 ## Header & Footer & Main 布局
+
 ```scss
 /* Header
   --------------------------*/
@@ -1025,7 +1104,9 @@ $--footer-padding: 0 20px !default;
 --------------------------*/
 $--main-padding: 20px !default;
 ```
+
 ## Timeline 时间轴
+
 ```scss
 /* Timeline
 --------------------------*/
@@ -1033,7 +1114,9 @@ $--timeline-node-size-normal: 12px !default;
 $--timeline-node-size-large: 14px !default;
 $--timeline-node-color: $--border-color-light !default;
 ```
+
 ## Backtop 回到顶部
+
 ```scss
 /* Backtop
 --------------------------*/
@@ -1044,7 +1127,9 @@ $--backtop-font-color: $--color-primary !default;
 /// color||Color|0
 $--backtop-hover-background-color: $--border-color-extra-light !default;
 ```
+
 ## Calendar 日历
+
 ```scss
 /* Calendar
 --------------------------*/
@@ -1054,14 +1139,18 @@ $--calendar-border: $--table-border !default;
 $--calendar-selected-background-color: #F2F8FE !default;
 $--calendar-cell-width: 85px !default;
 ```
+
 ## Form 表单
+
 ```scss
 /* Form
 -------------------------- */
 /// fontSize||Font|1
 $--form-label-font-size: $--font-size-base !default;
 ```
+
 ## Avatar 头像
+
 ```scss
 /* Avatar
 --------------------------*/
@@ -1082,7 +1171,9 @@ $--avatar-medium-size: 36px !default;
 /// size|1|Avatar Size|3
 $--avatar-small-size: 28px !default;
 ```
+
 ## Break-point 断点(媒体查询)
+
 ```scss
 /* Break-point
 --------------------------*/
