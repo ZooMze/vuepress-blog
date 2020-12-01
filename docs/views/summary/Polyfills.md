@@ -26,7 +26,8 @@ tags:
 
 默认情况下，它会把 `useBuiltIns: 'usage'` 传递给 `@babel/preset-env`，这样它会根据源代码中出现的语言特性自动检测需要的 polyfill。这确保了最终包里 polyfill 数量的最小化, 实现了按需添加polyfill。**然而，这也意味着如果其中一个依赖需要特殊的 polyfill，默认情况下 Babel 无法将其检测出来**
 
-`useBuiltIns` 的可选值: 
+`useBuiltIns` 的可选值:
+
 值|描述
 :-|:-
 `usage`|自动检测源码中使用的代码特性自动检测添加polyfill
