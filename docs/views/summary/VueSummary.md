@@ -150,21 +150,20 @@ mounted () {
 
 先来看看在下面的代码中, 假设一下每行代码分, 那些操作会触发视图更新?
 
-```js
-  <template>
-    <div>
-      <div v-for="item in listData" :key="item.id">{{ item.name }}</div>
-      <el-button @click="handleClick1">修改1</el-button>
-      <el-button @click="handleClick2">修改2</el-button>
-      <el-button @click="handleClick3">修改3</el-button>
-    </div>
-  </template>
-  ...
+```javascript
+<template>
+  <div>
+    <div v-for="item in listData" :key="item.id">{{ item.name }}</div>
+    <el-button @click="handleClick1">修改1</el-button>
+    <el-button @click="handleClick2">修改2</el-button>
+    <el-button @click="handleClick3">修改3</el-button>
+  </div>
+</template>
+
+<script>
   data() {
     listData: [{ name: 'a', id: '1' }, { name: 'b', id: '2' }, { name: 'c', id: '3' }]
   }
-  ...
-
   // 以下方法每次分开执行, 每一个执行完后刷新, 没有先后关系
   handleClick1() {
     this.listData[2].name = 'd'
@@ -175,7 +174,7 @@ mounted () {
   handleClick3() {
     this.listData.length = 2
   }
-  ...
+</script>
 ```
 
 ::: details 查看结果
@@ -200,7 +199,6 @@ this.$set(listData, 2, { name: 'd', id: '4' });
 ```
 
 * 更详细的内容查看官方文档: [全局API:  $set](https://cn.vuejs.org/v2/api/#Vue-set)
-
 
 ## Virtual DOM
 
@@ -697,3 +695,7 @@ directives: {
 
 * 通过 `arg` 进行传递, 它会出现在`binding.arg`
 * 通过 `value` 传递, 它会出现在 `binding.value`
+
+## 动画与过渡
+
+当界面拥有更加流畅的动画时, 交互体验将会大大提升
