@@ -10,7 +10,7 @@
     "vuepress": "1.5.0",
     "vuepress-plugin-comment": "^0.7.3",
     "vuepress-plugin-flowchart": "^1.4.3",
-    "vuepress-theme-reco": "1.4.7",
+    "vuepress-theme-reco": "^1.4.7",
     "watchpack": "1.6.1"
   },
   "description": "desc",
