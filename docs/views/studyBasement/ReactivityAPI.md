@@ -27,7 +27,7 @@ Vue3 使用了ES2015的新特性 [Proxy](https://developer.mozilla.org/zh-CN/doc
 
 确实没毛病, 那是因为vue将你写在`data()` Option中的数据自动进行了自动`reactive`处理所以变为了响应式, 而在vue3的 [*composition API*](https://v3.cn.vuejs.org/guide/composition-api-introduction.html#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%84%E5%90%88%E5%BC%8F-api) 中, 响应式数据需要自己在`setup`中创建, 否则你在修改数据值时vue将不会更新界面, 看下面这个例子
 
-```js
+```html
 <template>
   <div>
     <p>reactiveData: {{ reactiveData.num }}</p>
@@ -38,35 +38,37 @@ Vue3 使用了ES2015的新特性 [Proxy](https://developer.mozilla.org/zh-CN/doc
   </div>
 </template>
 
-import { reactive, ref } from 'vue'
+<script>
+  import { reactive, ref } from 'vue'
 
-export default {
-  setup() {
-    const reactiveData = { num: 666 };
-    const refData = ref(666);
-    let defaultData = 666; // 创建一个通常的值
+  export default {
+    setup() {
+      const reactiveData = { num: 666 };
+      const refData = ref(666);
+      let defaultData = 666; // 创建一个通常的值
 
-    // 自增
-    setTimeout(() => {
-      reactiveData.num += 1;
-      defaultData += 1;
-      console.log(reactiveData.num, defaultData)
-    }, 1000)
+      // 自增
+      setTimeout(() => {
+        reactiveData.num += 1;
+        defaultData += 1;
+        console.log(reactiveData.num, defaultData)
+      }, 1000)
 
-    // 定义方法
-    const handleClick = () => {
-      refData += 1;
-    };
+      // 定义方法
+      const handleClick = () => {
+        refData += 1;
+      };
 
-    // 混入至当前组件的渲染上下文
-    return {
-      reactiveData,
-      defaultData,
-      refData,
-      handleClick,
-    };
-  },
-}
+      // 混入至当前组件的渲染上下文
+      return {
+        reactiveData,
+        defaultData,
+        refData,
+        handleClick,
+      };
+    },
+  }
+</script>
 ```
 
 运行一下会发现:
@@ -205,43 +207,6 @@ cosnt refData = ref(666)
 console.log(refData.value) // >> 666
 ```
 
-### 自动展开
-
-> vue会为你在以下**两种情况**时自动展开(不用添加 **`.value`** 来访问数据)
->
-> 1. 在模板中时
-> 2. 作为响应式对象的属性时
-
-```html
-<template>
-  <div>
-    <!-- 直接展开 -->
-    <span>{{ refData }}<span>
-  </div>
-</template>
-
-<script>
-  import { ref, reactive } from 'vue';
-
-  export default {
-    setup() {
-      const refData = ref(666)
-      const reactiveData = reactive({
-        refData
-      })
-
-      console.log(reactiveData.refData) // >> 666
-
-      // 试试通过reactive修改ref的值
-      reactiveData.refData = 0
-      console.log(refData.value) // >> 0 (老铁没毛病)
-
-      return { refData, reactiveData }
-    }
-  }
-</script>
-```
-
 ### `toRef`
 
 响应式数据看起来很美好, 但是数据的响应性在某些情况下会丢失:
@@ -264,7 +229,7 @@ const objectData = { num: toRef(reactiveData, 'num') } // 用toRef处理单个�
 objectData.num.value = 2 // 结果如预期, reactiveData更新了
 ```
 
-好, 问题解决了, 新的麻烦又来了, 数据变成了一个ref, 这意味着你在上述提到的*两种情况*以外使用它的时候不可避免地要使用 `.value` 来自己手动展开
+好, 问题解决了, 新的麻烦又来了, 数据变成了一个ref, 这意味着你在某些时候要使用 `.value` 来自己手动展开
 
 ### `toRefs`
 
@@ -317,7 +282,7 @@ methods: {
 },
 ```
 
-### 自动脱ref
+### 自动展开
 
 vue还帮你做了一件事情, 还记得setup最终会混入渲染上下文吗? vue不仅做了混入还帮你做了 *自动脱ref* :
 
@@ -346,6 +311,41 @@ mounted() {
 > setup中 **`refData`** 打印了 RefImpl, 它是一个ref引用
 > mounted中 **`refData`** 打印了 666, 它是一个值
 
-这就是vue为了让开发者减少心智负担的 *自动脱ref*
+这就是vue为了让开发者减少心智负担的 *自动展开*
+
+> vue会为你在以下**两种情况**时自动展开(不用添加 **`.value`** 来访问数据)
+>
+> 1. 在渲染上下文中时
+> 2. 作为响应式对象的属性时
+
+```html{21}
+<template>
+  <div>
+    <!-- 自动展开 -->
+    <span>{{ refData }}<span>
+  </div>
+</template>
+
+<script>
+  import { ref, reactive } from 'vue';
+
+  export default {
+    setup() {
+      const refData = ref(666)
+      const reactiveData = reactive({
+        refData
+      })
+
+      console.log(reactiveData.refData) // >> 666
+
+      // 试试通过reactive修改ref的值
+      reactiveData.refData = 0 // 这里自动展开了
+      console.log(refData.value) // >> 0 (refData的值也被修改了, 老铁没毛病)
+
+      return { refData, reactiveData }
+    }
+  }
+</script>
+```
 
 更多内容正在学习中...
