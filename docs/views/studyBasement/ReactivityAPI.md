@@ -56,7 +56,7 @@ Vue3 使用了ES2015的新特性 [Proxy](https://developer.mozilla.org/zh-CN/doc
 
       // 定义方法
       const handleClick = () => {
-        refData += 1;
+        refData.value += 1;
       };
 
       // 混入至当前组件的渲染上下文
