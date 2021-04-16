@@ -188,7 +188,7 @@ const shallowReactiveData = {
   }
 }
 
-isReactive(state.nested) // false
+isReactive(shallowReactiveData.children) // false
 ```
 
 ## Ref
