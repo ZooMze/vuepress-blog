@@ -181,12 +181,12 @@ console.log(toRaw(reactiveNum) === num) // true
 了解了上面的API, 我们了解了`reactive`是深度的, 但是有时数据嵌套很多很深时, 我们并不希望它深层响应, 使用`shallowReactive`即可避免这种情况, 从而减少性能开销
 
 ```js
-const shallowReactiveData = {
+const shallowReactiveData = shallowReactive({
   num: 666,
   children: {
     num: 777
   }
-}
+})
 
 isReactive(shallowReactiveData.children) // false
 ```
