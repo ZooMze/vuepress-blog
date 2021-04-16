@@ -188,7 +188,7 @@ const shallowReactiveData = shallowReactive({
   }
 })
 
-isReactive(shallowReactiveData.children) // false
+console.log(isReactive(shallowReactiveData.children)) // false
 ```
 
 ## Ref
