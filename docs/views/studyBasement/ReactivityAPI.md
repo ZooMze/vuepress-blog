@@ -142,11 +142,11 @@ const obj = { num: 666 };
 const customProxy = new Proxy(obj, {
   get(target, propKey, receiver) {
     console.log('get');
-    return Reflect.get(target, propKey, receiver);
+    return Reflect.get(target, propKey, receiver); // getter 
   },
   set(target, propKey, value, receiver) {
     console.log('set');
-    Reflect.set(target, propKey, value, receiver);
+    Reflect.set(target, propKey, value, receiver); // setter
   }
 ) // 自定义Proxy
 
@@ -237,7 +237,7 @@ objectData.num.value = 2 // 结果如预期, reactiveData更新了
 
 在setup中就常常用到解构:
 
-```js
+```js{10}
 setup() {
   const objectData = reactive({
     param1: 111,
@@ -247,7 +247,7 @@ setup() {
   })
 
   return {
-    ...objectData
+    ...objectData // 注意这里是解构
   }
 }
 ```
@@ -271,7 +271,7 @@ setup() {
 
 这样在模板和methods Option中都可以直接使用这四个响应式的数据了
 
-```js
+```js{6}
 methods: {
   setup() {
     // ... 同上
@@ -307,9 +307,12 @@ mounted() {
 
 打开控制台发现了什么不同吗?
 
-> **`reactiveData`** mounted和setup中打印结果一致
-> setup中 **`refData`** 打印了 RefImpl, 它是一个ref引用
-> mounted中 **`refData`** 打印了 666, 它是一个值
+::: tip 输出差异
+**`reactiveData`** mounted和setup中打印结果一致;
+
+setup中 **`refData`** 打印了 RefImpl, 它是一个ref引用,
+mounted中 **`refData`** 打印了 666, 它是一个值
+:::
 
 这就是vue为了让开发者减少心智负担的 *自动展开*
 
@@ -569,9 +572,9 @@ setup() {
 
 ## 最后
 
-其实本文还有一些API没有介绍到, 但是相信你看完本文之后再去查到其余的API的时候肯定会更清晰一些
+其实本文还有一些API没有介绍到, 希望看完本文的你再去了解更多的时候会更有条理一点
 
-本文未展开说明的reactivity API:
+本文未展开说明的reactivity API和内容:
 
 Reactive:
 
